@@ -13,8 +13,13 @@ PlayScene::PlayScene(tplay::Game *game, int level) {
 
 
 void PlayScene::loadMap(int level) {
-	FILE *filep = fopen( (std::string("Maps/Level") + std::to_string(level) + std::string(".txt")).c_str(), "r");
-	//FILE *filep = fopen( "Maps/Tutorial.txt", "r");
+	FILE *filep;
+	if (level == 0) {
+		filep = fopen( "Maps/Tutorial.txt", "r");
+	}
+	else {
+		filep = fopen( (std::string("Maps/Level") + std::to_string(level) + std::string(".txt")).c_str(), "r");
+	}
 	if (filep == NULL) game->quit();
 	
 	fscanf(filep, "%i %i\n", &mapX, &mapY);
@@ -24,6 +29,17 @@ void PlayScene::loadMap(int level) {
 		}
 		fscanf(filep, "\n");
 	}
+}
+
+
+bool PlayScene::collides(int x, int y) {
+	// map
+	for (int i = 0; i < mapX; i++) {
+		for (int j = 0; j < mapY; j++) {
+			if (Map[i][j]) return true;
+		}
+	}
+	return false;
 }
 
 
