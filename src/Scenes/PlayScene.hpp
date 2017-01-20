@@ -24,7 +24,7 @@ class PlayScene : public tplay::Scene {
 		tplay::Camera camera;
 		
 		PlayScene(tplay::Game *game, int level);
-		Player player = Player(game);
+		Player *player;
 		
 		void update();
 		void draw();

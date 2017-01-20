@@ -22,6 +22,7 @@ PlayScene::PlayScene(tplay::Game *game, int level) {
 	this->level = level;
 	this->game->graphics.setCamera(&camera);
 	
+	player = new Player(game);
 	loadMap(level);
 }
 
@@ -66,7 +67,7 @@ void PlayScene::update() {
 		
 	}
 	else if (playerTurn) {
-		player.update();
+		player->update();
 	}
 	else { // enemy turn
 		
@@ -80,5 +81,5 @@ void PlayScene::draw() {
 			game->graphics.addToWorld(j, i, std::string(1, Map[i][j]));
 		}
 	}
-	player.draw();
+	player->draw();
 }
