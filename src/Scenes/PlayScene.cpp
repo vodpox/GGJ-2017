@@ -66,7 +66,7 @@ void PlayScene::update() {
 		
 	}
 	else if (playerTurn) {
-		
+		player.update();
 	}
 	else { // enemy turn
 		
@@ -80,4 +80,5 @@ void PlayScene::draw() {
 			game->graphics.addToWorld(j, i, std::string(1, Map[j][i]));
 		}
 	}
+	player.draw();
 }
