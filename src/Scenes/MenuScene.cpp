@@ -15,11 +15,11 @@ void MenuScene::update() {
 		option--;
 	}else if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
 		if(option == 1){
-			PlayScene playScene(game, 1);
-			game->setScene(&playScene);
+			PlayScene *playScene = new PlayScene(game, 1);
+			game->setScene(playScene);
 		}else if(option == 2){
-			PlayScene playScene(game, 0);
-			game->setScene(&playScene);
+			PlayScene *playScene = new PlayScene(game, 0);
+			game->setScene(playScene);
 		}else if(option == 3){
 			game->quit();
 		}

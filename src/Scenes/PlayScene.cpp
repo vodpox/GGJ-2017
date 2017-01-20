@@ -75,9 +75,9 @@ void PlayScene::update() {
 
 
 void PlayScene::draw() {
-	for (int i = 0; i < mapY; i++) {
-		for (int j = 0; j < mapX; j++) {
-			game->graphics.addToWorld(j, i, std::string(1, Map[j][i]));
+	for (int i = 0; i < mapX; i++) {
+		for (int j = 0; j < mapY; j++) {
+			game->graphics.addToWorld(j, i, std::string(1, Map[i][j]));
 		}
 	}
 }
