@@ -20,7 +20,7 @@ class MenuScene : public tplay::Scene {
 		std::string option3text   = "     Quit     ";
 		std::string option3textOn = ">    Quit    <";
 		
-		Player player;
+		Player player(tplay::Game *game);
 	
 	public:
 		tplay::Game *game;

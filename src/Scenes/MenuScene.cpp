@@ -6,20 +6,9 @@
 MenuScene::MenuScene(tplay::Game *game) {
 	this->game = game;
 	this->game->graphics.setCamera(&camera);
-	player.setXY(5, 5);
 }
 
 void MenuScene::update() {
-    if (game->input.isButtonDown(tplay::Keyboard::S)) {
-		player.move(0, -1);
-	}else if(game->input.isButtonDown(tplay::Keyboard::W)){
-		player.move(0, 1);
-	}else if(game->input.isButtonDown(tplay::Keyboard::A)){
-		player.move(-1, 0);
-	}else if(game->input.isButtonDown(tplay::Keyboard::D)){
-		player.move(1, 0);
-	}
-	
     if (game->input.isButtonDown(tplay::Keyboard::S)) {
 		option++;
 	}else if(game->input.isButtonDown(tplay::Keyboard::W)){
@@ -64,6 +53,4 @@ void MenuScene::draw() {
 	game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 7, 12, option1);
 	game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 7, 10, option2);
 	game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 7, 8, option3);
-	
-	game->graphics.addToWorld(player.getX(), player.getY(), "@");
 }
