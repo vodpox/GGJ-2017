@@ -22,7 +22,9 @@ class PlayScene : public tplay::Scene {
 		
 		void update();
 		void draw();
+		
 		void loadMap(int level);
+		bool collides(int x, int y);
 };
 
 #endif
