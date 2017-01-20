@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Scene.h"
 #include "Camera.h"
+#include "../Player.hpp"
 
 
 class MenuScene : public tplay::Scene {
@@ -18,6 +19,8 @@ class MenuScene : public tplay::Scene {
 		std::string option2textOn = ">  Tutorial  <";
 		std::string option3text   = "     Quit     ";
 		std::string option3textOn = ">    Quit    <";
+		
+		Player player;
 	
 	public:
 		tplay::Game *game;
