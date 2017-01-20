@@ -2,6 +2,20 @@
 #include "PlayScene.hpp"
 #include <cstdio>
 #include <string>
+#include <unistd.h>
+#ifdef WIN32
+	#include "windows.h"
+#endif
+
+
+void doSleep(int milliseconds) {
+	#ifdef WIN32
+		Sleep(milliseconds);
+	#else
+		usleep(milliseconds * 1000);
+	#endif
+}
+
 
 PlayScene::PlayScene(tplay::Game *game, int level) {
 	this->game = game;
@@ -44,7 +58,19 @@ bool PlayScene::collides(int x, int y) {
 
 
 void PlayScene::update() {
+	if (sleepTime > 1000) sleepTime = 1000;
+	doSleep(sleepTime);
+	sleepTime = 0;
 	
+	if (animationPlaying) {
+		
+	}
+	else if (playerTurn) {
+		
+	}
+	else { // enemy turn
+		
+	}
 }
 
 

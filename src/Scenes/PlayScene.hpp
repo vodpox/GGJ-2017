@@ -13,6 +13,10 @@ class PlayScene : public tplay::Scene {
 		
 		int mapX, mapY;
 		char Map[1000][1000];
+		
+		int animationPlaying = 0;
+		int sleepTime = 0;
+		bool playerTurn = true;
 	
 	public:
 		tplay::Game *game;
