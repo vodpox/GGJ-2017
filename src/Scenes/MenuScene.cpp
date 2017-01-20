@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "MenuScene.hpp"
+#include "PlayScene.hpp"
 
 
 MenuScene::MenuScene(tplay::Game *game) {
@@ -25,9 +26,11 @@ void MenuScene::update() {
 		option--;
 	}else if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
 		if(option == 1){
-			
+			PlayScene playScene(game, 1);
+			game->setScene(&playScene);
 		}else if(option == 2){
-			
+			PlayScene playScene(game, 0);
+			game->setScene(&playScene);
 		}else if(option == 3){
 			game->quit();
 		}
