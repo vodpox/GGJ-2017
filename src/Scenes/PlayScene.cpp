@@ -130,6 +130,12 @@ void PlayScene::update() {
 
 
 void PlayScene::draw() {
+	int termX = game->graphics.getTerminalSizeX();
+	int termY = game->graphics.getTerminalSizeY();
+	
+	camera.setCoordinates(player->getX() - game->graphics.getTerminalSizeX() / 2, player->getY() - game->graphics.getTerminalSizeY() / 2);
+	
+	//map
 	for (int i = 0; i < mapX; i++) {
 		for (int j = 0; j < mapY; j++) {
 			if (Map[i][j] == '#') {
@@ -142,4 +148,11 @@ void PlayScene::draw() {
 	}
 	player->draw();
 	enemy->draw(player->getX(), player->getY());
+	
+	// ui
+	game->graphics.setFormat(tplay::Format::NEGATIVE);
+	game->graphics.addToScreen(1, 0, "Health: " + std::to_string(player->getHealth()));
+	game->graphics.addToScreen(termX / 2 - std::string("Jammers: " + std::to_string(player->getJammers())).size() / 2 , 0, "Jammers: " + std::to_string(player->getJammers()));
+	game->graphics.addToScreen(termX - 1 - std::string("AP: " + std::to_string(player->getAP())).size(), 0, "AP: " + std::to_string(player->getAP()));
+	game->graphics.unsetFormat(tplay::Format::NEGATIVE);
 }
