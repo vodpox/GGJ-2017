@@ -19,6 +19,9 @@ class Player {
 		bool isAiming = false;
 		float distance_to_centre;
 		tplay::Game *game;
+		int mapX, mapY;
+		/*char Map[1000][1000];
+		bool test = false;*/
 	
 	public:
 		Player(tplay::Game *game);
@@ -33,6 +36,8 @@ class Player {
 		void update();
 		void draw();
 		void drawAim();
+		/*void interactDoor();
+		void loadMap(int level);*/
 };
 
 #endif

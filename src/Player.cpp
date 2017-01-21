@@ -5,6 +5,7 @@
 Player::Player(tplay::Game *game){
 	this->game = game;
 	setXY(x, y);
+	//loadMap(0);
 }
 
 int Player::getX() {
@@ -61,6 +62,12 @@ void Player::update(){
 		if(isAiming) moveAim(1, 0);
 		else move(1, 0);
 	}
+	/*if(game->input.isButtonDown(tplay::Keyboard::E)){
+		if(isAiming){  }
+		else{
+			interactDoor();
+		}
+	}*/
 	
 	if(game->input.isButtonDown(tplay::Keyboard::SPACEBAR)){
 		xAim = x;
@@ -72,6 +79,34 @@ void Player::update(){
 		}
 	}
 }
+
+// --
+/*void Player::loadMap(int level) {
+	FILE *filep;
+	if (level == 0) {
+		filep = fopen( "Maps/Tutorial.txt", "r");
+	}
+	else {
+		filep = fopen( (std::string("Maps/Level") + std::to_string(level) + std::string(".txt")).c_str(), "r");
+	}
+	if (filep == NULL) game->quit();
+	
+	fscanf(filep, "%i %i\n", &mapX, &mapY);
+	for (int i = mapY - 1; i >= 0; i--) {
+		for (int j = 0; j < mapX; j++) {
+			fscanf(filep, "%c", &Map[j][i]);
+		}
+		fscanf(filep, "\n");
+	}
+}*/
+// --
+
+/*void Player::interactDoor(){
+	if( Map[x+1][y] == '|'){ // Right
+		char &gg = Map[x+1][y];
+		&gg = ' ';
+	}
+}*/
 
 void Player::draw(){
 	game->graphics.addToWorld(x, y, "@");

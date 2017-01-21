@@ -80,7 +80,7 @@ void PlayScene::update() {
 void PlayScene::draw() {
 	for (int i = 0; i < mapX; i++) {
 		for (int j = 0; j < mapY; j++) {
-			game->graphics.addToWorld(j, i, std::string(1, Map[i][j]));
+			game->graphics.addToWorld(i, j, std::string(1, Map[i][j]));
 		}
 	}
 	player->draw();
