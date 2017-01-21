@@ -103,14 +103,32 @@ void Player::draw(){
 }
 
 void Player::drawAim(){
+	bool found1 = false;
+	bool found0 = false;
 	for (int aimy = 0; aimy <= 2*aimRadius; aimy++){
 		for (int aimx = 0; aimx <= 2*aimRadius; aimx++){
 			distance_to_centre = sqrt((aimy - aimRadius)*(aimy - aimRadius) + (aimx - aimRadius)*(aimx - aimRadius));
 			if (distance_to_centre > aimRadius-0.5 && distance_to_centre < aimRadius+0.5){
+				if(!found1 && found0){
+					found0 = false;
+				}
+				if(aimy>0){
+					found1 = true;
+				}
+				
 				game->graphics.addToWorld(aimx+x-aimRadius, aimy+y-aimRadius, ".");
 				aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = true;
 			}else{
-				aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = false;
+				if(aimy>0){
+					found0 = true;
+					if(found1 && found0){
+						aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = true;
+					}else{
+						aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = false;
+					}
+				}else{
+					aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = false;
+				}
 			}
 		}
 	}
