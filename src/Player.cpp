@@ -1,9 +1,12 @@
 #include "Game.h"
 #include "Player.hpp"
 #include <cmath>
+#include "Scenes/PlayScene.hpp"
 
-Player::Player(tplay::Game *game){
+
+Player::Player(tplay::Game *game, PlayScene *playScene){
 	this->game = game;
+	this->playScene = playScene;
 	setXY(x, y);
 	//loadMap(0);
 }
@@ -35,10 +38,10 @@ int Player::getAP() {
 }
 
 void Player::move(int x, int y) {
-	this->x += x;
-	this->y += y;
-	if(ap > 0){
+	if(ap > 0 && !playScene->collides(this->x + x, this->y + y, true)){
 		ap--;
+		this->x += x;
+		this->y += y;
 	}
 }
 

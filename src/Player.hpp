@@ -2,6 +2,10 @@
 #define PLAYER
 
 #include "Game.h"
+class Player;
+class PlayScene;
+#include "Scenes/PlayScene.hpp"
+
 
 class Player {
 	private:
@@ -19,6 +23,7 @@ class Player {
 		bool isAiming = false;
 		float distance_to_centre;
 		tplay::Game *game;
+		PlayScene *playScene;
 		bool aimSpace[256][256];
 		int aimIntervals[256][2];
 		int aimYInterval[2];
@@ -26,7 +31,7 @@ class Player {
 		bool test = false;*/
 	
 	public:
-		Player(tplay::Game *game);
+		Player(tplay::Game *game, PlayScene *playScene);
 		int getX();
 		int getY();
 		int getHealth();
