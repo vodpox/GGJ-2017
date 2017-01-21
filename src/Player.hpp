@@ -14,12 +14,14 @@ class Player {
 		int jammerCount = 0;
 		int maxJammerCount = 3;
 		int aimRadius = 6;
-		int apMax = 3;
+		int apMax = 15;
 		int ap = apMax;
 		bool isAiming = false;
 		float distance_to_centre;
 		tplay::Game *game;
+		bool aimSpace[256][256];
 		int aimIntervals[256][2];
+		int aimYInterval[2];
 		/*char Map[1000][1000];
 		bool test = false;*/
 	

@@ -43,14 +43,22 @@ void Player::move(int x, int y) {
 }
 
 void Player::moveAim(int x, int y) {
-	int newxAim = newxAim + x;
-	int newyAim = newyAim + y;
-	//if( aimIntervals[newyAim][1] != -20  ){ 
-		if(newxAim >= aimIntervals[yAim][0] && newxAim <= aimIntervals[yAim][1] ){
+	/*bool move = true;
+	if(y!=0){
+		if(xAim < aimIntervals[yAim+y][0] && xAim > aimIntervals[yAim+y][1] ){
+			move = false; // <-------------
+		}
+	}
+	if( yAim+y >= aimYInterval[0] && yAim+y <= aimYInterval[1] && move){
+		if(xAim+x >= aimIntervals[yAim][0] && xAim+x <= aimIntervals[yAim][1] ){
 			this->xAim += x;
 			this->yAim += y;
 		}
-	//}
+	}*/
+	if(!aimSpace[xAim+x][yAim+y]){
+		this->xAim += x;
+		this->yAim += y;
+	}
 }
 
 void Player::setXY(int x, int y) {
@@ -113,26 +121,47 @@ void Player::draw(){
 }
 
 void Player::drawAim(){
-	bool first = true;
+	bool firstx = true;
 	for (int aimy = 0; aimy <= 2*aimRadius; aimy++){
-		first = true;
-		for (int aimx = 0; aimx <= 2*aimRadius; aimx++){\
+		firstx = true;
+		for (int aimx = 0; aimx <= 2*aimRadius; aimx++){
 			distance_to_centre = sqrt((aimy - aimRadius)*(aimy - aimRadius) + (aimx - aimRadius)*(aimx - aimRadius));
 			if (distance_to_centre > aimRadius-0.5 && distance_to_centre < aimRadius+0.5){
+				/*if(aimx+x-aimRadius<0) continue;
+				if(aimx+y-aimRadius<0) continue;*/
 				game->graphics.addToWorld(aimx+x-aimRadius, aimy+y-aimRadius, ".");
-				if(first){
+				aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = true;
+				/*if(firstx){
 					aimIntervals[aimy+y-aimRadius][0] = aimx+x-aimRadius;
-					first = false;
+					firstx = false;
 				}
-				aimIntervals[aimy+y-aimRadius][1] = aimx+x-aimRadius;
+				if(aimy==0){
+					aimYInterval[0] = aimy+y-aimRadius;
+				}
+				aimYInterval[1] = aimy+y-aimRadius;
+				aimIntervals[aimy+y-aimRadius][1] = aimx+x-aimRadius;*/
 			}else{
-				aimIntervals[aimy+y-aimRadius][1] = -20;
+				aimSpace[aimx][aimy] = false;
 			}
 		}
 	}
 	game->graphics.addToWorld(xAim, yAim, "x");
-	game->graphics.addToWorld(20, 20, std::to_string(aimIntervals[yAim][0]));
+	/*game->graphics.addToWorld(20, 20, std::to_string(aimIntervals[yAim][0]));
 	game->graphics.addToWorld(23, 20, std::to_string(aimIntervals[yAim][1]));
-	game->graphics.addToWorld(23, 20, std::to_string(aimIntervals[yAim][1]));
-	game->graphics.addToWorld(23, 20, std::to_string(aimIntervals[yAim][1]));
+	game->graphics.addToWorld(26, 20, "-");
+	game->graphics.addToWorld(29, 20, std::to_string(xAim));
+	game->graphics.addToWorld(20, 19, std::to_string(aimYInterval[0]));
+	game->graphics.addToWorld(23, 19, std::to_string(aimYInterval[1]));*/
+	
+	/*int num;
+	for(int i=0; i<13; i++){
+		for(int j=0; j<13; j++){
+			if(aimSpace[j][i]){
+				num = 1;
+			}else{
+				num = 0;
+			}
+			game->graphics.addToWorld(j, i, std::to_string(num));
+		}
+	}*/
 }
