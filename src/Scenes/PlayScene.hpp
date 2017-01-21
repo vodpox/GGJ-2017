@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Camera.h"
 #include "../Player.hpp"
+#include "../Enemy.hpp"
 
 
 class PlayScene : public tplay::Scene {
@@ -25,6 +26,7 @@ class PlayScene : public tplay::Scene {
 		
 		PlayScene(tplay::Game *game, int level);
 		Player *player;
+		Enemy *enemy;
 		
 		void update();
 		void draw();

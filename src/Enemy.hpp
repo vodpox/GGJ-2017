@@ -22,7 +22,7 @@ class Enemy {
 		void setXY(int x, int y);
 		void move(int x, int y);
 		int update();
-		void draw();
+		void draw(int, int);
 
 };
 
