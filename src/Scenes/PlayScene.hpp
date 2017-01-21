@@ -2,11 +2,14 @@
 #define PLAYSCENE
 
 
+#include <vector>
+
 #include "Game.h"
 #include "Scene.h"
 #include "Camera.h"
 #include "../Player.hpp"
 #include "../Enemy.hpp"
+#include "../Door.hpp"
 
 
 class PlayScene : public tplay::Scene {
@@ -19,6 +22,8 @@ class PlayScene : public tplay::Scene {
 		int animationPlaying = 0;
 		int sleepTime = 0;
 		bool playerTurn = true;
+		
+		std::vector<Door> Doors;
 	
 	public:
 		tplay::Game *game;

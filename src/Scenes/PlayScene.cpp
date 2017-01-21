@@ -45,6 +45,58 @@ void PlayScene::loadMap(int level) {
 		}
 		fscanf(filep, "\n");
 	}
+	
+	for (int i = 0; i < mapX; i++) {
+		for (int j = 0; j < mapY; j++) {
+			if (Map[i][j] == 'O') {
+				int closedX, closedY, openX, openY;
+				char door;
+				
+				if (Map[i-1][j] == '|' || Map[i-1][j] == '-') {
+					door = Map[i-1][j];
+					closedX = i-1;
+					closedY = j;
+				}
+				else if (Map[i+1][j] == '|' || Map[i+1][j] == '-') {
+					door = Map[i+1][j];
+					closedX = i+1;
+					closedY = j;
+				}
+				else if (Map[i][j-1] == '|' || Map[i][j-1] == '-') {
+					door = Map[i][j-1];
+					closedX = i;
+					closedY = j-1;
+				}
+				else if (Map[i][j+1] == '|' || Map[i][j+1] == '-') {
+					door = Map[i][j+1];
+					closedX = i;
+					closedY = j+1;
+				}
+				if (Map[i-1][j] == '.') {
+					openX = i-1;
+					openY = j;
+				}
+				else if (Map[i+1][j] == '.') {
+					openX = i+1;
+					openY = j;
+				}
+				else if (Map[i][j-1] == '.') {
+					openX = i;
+					openY = j-1;
+				}
+				else if (Map[i][j+1] == '.') {
+					openX = i;
+					openY = j+1;
+				}
+				else {
+					game->quit();
+				}
+				
+				Doors.push_back(Door(game, i, j, openX, openY, closedX, closedY, door));
+			}
+		}
+	}
+	
 }
 
 
@@ -81,9 +133,12 @@ void PlayScene::draw() {
 	for (int i = 0; i < mapX; i++) {
 		for (int j = 0; j < mapY; j++) {
 			if (Map[i][j] == '#') {
-				game->graphics.addToWorld(i, j, '#');
+				game->graphics.addToWorld(i, j, "#");
 			}
 		}
+	}
+	for (int i = 0; i < Doors.size(); i++) {
+		Doors[i].draw();
 	}
 	player->draw();
 	enemy->draw(player->getX(), player->getY());
