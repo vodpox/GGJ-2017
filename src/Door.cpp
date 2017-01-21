@@ -40,6 +40,16 @@ int Door::getDoorY() {
 }
 
 
+int Door::getClosedX() {
+	return closedX;
+}
+
+
+int Door::getClosedY() {
+	return closedY;
+}
+
+
 bool Door::toggle() {
 	
 }

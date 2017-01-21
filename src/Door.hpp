@@ -16,6 +16,8 @@ class Door {
 		int getBaseY();
 		int getDoorX();
 		int getDoorY();
+		int getClosedX();
+		int getClosedY();
 		bool toggle();
 		bool setOpen(bool isOpen);
 		void draw();
