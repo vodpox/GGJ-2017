@@ -118,7 +118,7 @@ void Player::drawAim(){
 		found0 = false;
 		inner = false;
 		for (int aimx = 0; aimx <= 2*aimRadius; aimx++){
-			if(x-aimRadius+aimx < 0) continue;
+			if(x-aimRadius+aimx < 1) continue;
 			distance_to_centre = sqrt((aimy - aimRadius)*(aimy - aimRadius) + (aimx - aimRadius)*(aimx - aimRadius));
 			if (distance_to_centre > aimRadius-0.5 && distance_to_centre < aimRadius+0.5){
 				if(aimy>0){
@@ -148,7 +148,7 @@ void Player::drawAim(){
 	}
 	game->graphics.addToWorld(xAim, yAim, "x");
 	
-	int num;
+	/*int num;
 	int temp1 = x-aimRadius;
 	int temp2 = y-aimRadius;
 	int inc1 = -20, inc2 = 0;
@@ -165,5 +165,5 @@ void Player::drawAim(){
 			inc1++;
 		}
 		inc2++;
-	}
+	}*/
 }
