@@ -23,6 +23,7 @@ PlayScene::PlayScene(tplay::Game *game, int level) {
 	this->game->graphics.setCamera(&camera);
 	
 	player = new Player(game);
+	jammer = new Jammer(game);
 	enemy = new Enemy(game, 5, 7);
 	loadMap(level);
 }
@@ -136,6 +137,7 @@ void PlayScene::draw() {
 	
 	camera.setCoordinates(player->getX() - game->graphics.getTerminalSizeX() / 2, player->getY() - game->graphics.getTerminalSizeY() / 2);
 	
+	jammer->draw();
 	//map
 	for (int i = 0; i < mapX; i++) {
 		for (int j = 0; j < mapY; j++) {

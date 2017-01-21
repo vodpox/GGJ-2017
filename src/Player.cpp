@@ -68,6 +68,9 @@ void Player::update(bool *playerTurn){
 			if(isAiming) moveAim(1, 0);
 			else move(1, 0);
 		}
+		if(game->input.isButtonDown(tplay::Keyboard::E)){
+			if(isAiming) shoot();
+		}
 	}
 	if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
 		*playerTurn = false;
@@ -84,6 +87,10 @@ void Player::update(bool *playerTurn){
 	}
 }
 
+void Player::shoot(){
+	
+}
+
 void Player::resetAP(){
 	this->ap = apMax;
 }
@@ -96,9 +103,7 @@ void Player::draw(){
 }
 
 void Player::drawAim(){
-	bool firstx = true;
 	for (int aimy = 0; aimy <= 2*aimRadius; aimy++){
-		firstx = true;
 		for (int aimx = 0; aimx <= 2*aimRadius; aimx++){
 			distance_to_centre = sqrt((aimy - aimRadius)*(aimy - aimRadius) + (aimx - aimRadius)*(aimx - aimRadius));
 			if (distance_to_centre > aimRadius-0.5 && distance_to_centre < aimRadius+0.5){
@@ -111,7 +116,7 @@ void Player::drawAim(){
 	}
 	game->graphics.addToWorld(xAim, yAim, "x");
 	
-	/*int num;
+	int num;
 	int temp1 = x-aimRadius;
 	int temp2 = y-aimRadius;
 	int inc1 = -15, inc2 = 0;
@@ -127,5 +132,5 @@ void Player::drawAim(){
 			inc1++;
 		}
 		inc2++;
-	}*/
+	}
 }

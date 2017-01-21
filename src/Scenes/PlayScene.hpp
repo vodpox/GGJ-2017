@@ -10,6 +10,7 @@
 #include "../Player.hpp"
 #include "../Enemy.hpp"
 #include "../Door.hpp"
+#include "../Jammer.hpp"
 
 
 class PlayScene : public tplay::Scene {
@@ -32,6 +33,7 @@ class PlayScene : public tplay::Scene {
 		PlayScene(tplay::Game *game, int level);
 		Player *player;
 		Enemy *enemy;
+		Jammer *jammer;
 		
 		void update();
 		void draw();

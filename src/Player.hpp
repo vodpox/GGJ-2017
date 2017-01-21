@@ -42,6 +42,7 @@ class Player {
 		void drawAim();
 		void interactDoor();
 		void resetAP();
+		void shoot();
 		/*void loadMap(int level);*/
 };
 
