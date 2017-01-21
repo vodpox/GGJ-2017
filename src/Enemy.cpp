@@ -98,7 +98,7 @@ void Enemy::setXY(int x, int y) {
 }
 
 
-int Enemy::update(){
+int Enemy::update(int id){
 	if (AP <= 0) return 0;
 	
 	// pathfinding !!!!!!!!!!!!!!!!!! OG GOD WHY
@@ -135,7 +135,7 @@ int Enemy::update(){
 			Nodes[i][j].x = i;
 			Nodes[i][j].y = j;
 			//Nodes[i][j].passable = (playScene->Map[i][j] != '#' && playScene->Map[i][j] != 'O');
-			Nodes[i][j].passable = !playScene->collides(i, j, false);
+			Nodes[i][j].passable = !playScene->collides(i, j, false, id);
 			Nodes[i][j].h = std::abs(x - playScene->player->getX()) + std::abs(y - playScene->player->getY());
 		}
 	}

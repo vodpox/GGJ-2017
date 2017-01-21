@@ -121,9 +121,40 @@ bool PlayScene::collides(int x, int y, bool doDoors) {
 			if (Doors[i].getDoorX() == x && Doors[i].getDoorY() == y) return true;
 		}
 	}
+	else {
+		for (int i = 0; i < Doors.size(); i++) {
+			if (Doors[i].getDoorX() == x && Doors[i].getDoorY() == y && Doors[i].isOpen) return true;
+		}
+	}
 	
 	for (int i = 0; i < Enemies.size(); i++) {
 		if (Enemies[i].getX() == x && Enemies[i].getY() == y) return true;
+	}
+	
+	return false;
+}
+
+
+bool PlayScene::collides(int x, int y, bool doDoors, int igor) {
+	// map
+	if (x < 0 || x >= mapX || y < 0 || y >= mapY) return true;
+	if (Map[x][y] == '#') return true;
+	
+	if (Map[x][y] == 'O') return true;
+	
+	if (doDoors) {
+		for (int i = 0; i < Doors.size(); i++) {
+			if (Doors[i].getDoorX() == x && Doors[i].getDoorY() == y) return true;
+		}
+	}
+	else {
+		for (int i = 0; i < Doors.size(); i++) {
+			if (Doors[i].getDoorX() == x && Doors[i].getDoorY() == y && Doors[i].isOpen) return true;
+		}
+	}
+	
+	for (int i = 0; i < Enemies.size(); i++) {
+		if (Enemies[i].getX() == x && Enemies[i].getY() == y && i != igor) return true;
 	}
 	
 	return false;
@@ -147,7 +178,7 @@ void PlayScene::update() {
 	}
 	else { // enemy turn
 		for (int i = 0; i < Enemies.size(); i++) {
-			if (Enemies[i].update() != 0) return;
+			if (Enemies[i].update(i) != 0) return;
 		}
 		playerTurn = true;
 		player->resetAP();
