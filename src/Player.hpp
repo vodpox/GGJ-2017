@@ -17,7 +17,7 @@ class Player {
 		int maxHealth = 100;
 		int jammerCount = 0;
 		int maxJammerCount = 3;
-		int aimRadius = 8;
+		int aimRadius = 6;
 		int apMax = 15;
 		int ap = apMax;
 		bool isAiming = false;
