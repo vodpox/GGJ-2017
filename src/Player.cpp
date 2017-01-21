@@ -72,7 +72,11 @@ void Player::update(bool *playerTurn){
 			else move(1, 0);
 		}
 		if(game->input.isButtonDown(tplay::Keyboard::E)){
-			if(isAiming) shoot();
+			if (isAiming) shoot();
+			else if ( playScene->nearDoor(x, y) != -1 && ap > 0 ) {
+				playScene->Doors[playScene->nearDoor(x, y)].toggle();
+				ap--;
+			}
 		}
 	}
 	if(game->input.isButtonDown(tplay::Keyboard::ENTER)){

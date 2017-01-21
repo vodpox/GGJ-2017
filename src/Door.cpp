@@ -51,7 +51,7 @@ int Door::getClosedY() {
 
 
 bool Door::toggle() {
-	
+	isOpen = !isOpen;
 }
 
 
