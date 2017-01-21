@@ -33,11 +33,11 @@ class Player {
 		void setXY(int x, int y);
 		void move(int x, int y);
 		void moveAim(int x, int y);
-		void update();
+		void update(bool *playerTurn);
 		void draw();
 		void drawAim();
-		/*void interactDoor();
-		void loadMap(int level);*/
+		void interactDoor();
+		/*void loadMap(int level);*/
 };
 
 #endif
