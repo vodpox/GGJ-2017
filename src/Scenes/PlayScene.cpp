@@ -30,8 +30,8 @@ PlayScene::PlayScene(tplay::Game *game, int level) {
 
 void PlayScene::loadMap(int level) {
 	FILE *filep;
-	if (level == 0) {
-		filep = fopen( "Maps/Tutorial.txt", "r");
+	if (level < 0) {
+		filep = fopen( (std::string("Maps/Tutorial") + std::to_string(level * -1) + std::string(".txt")).c_str(), "r");
 	}
 	else {
 		filep = fopen( (std::string("Maps/Level") + std::to_string(level) + std::string(".txt")).c_str(), "r");
@@ -54,8 +54,15 @@ void PlayScene::loadMap(int level) {
 			else if (Map[i][j] == 'R') {
 				Enemies.push_back(Enemy(game, this, i, j));
 			}
-			else if (Map[i][j] == '[') {
-				// TODO: crates
+			else if (Map[i][j] == '=') {
+				Crate crate;
+				crate.x = i;
+				crate.y = j;
+				Crates.push_back(crate);
+			}
+			else if (Map[i][j] == '!') {
+				endX = i;
+				endY = j;
 			}
 			else if (Map[i][j] == 'O') {
 				int closedX, closedY, openX, openY;
@@ -116,6 +123,8 @@ bool PlayScene::collides(int x, int y, bool doDoors) {
 	
 	if (Map[x][y] == 'O') return true;
 	
+	if (Map[x][y] == '=') return true;
+	
 	if (doDoors) {
 		for (int i = 0; i < Doors.size(); i++) {
 			if (Doors[i].getDoorX() == x && Doors[i].getDoorY() == y) return true;
@@ -172,6 +181,17 @@ int PlayScene::nearDoor(int x, int y) {
 }
 
 
+int PlayScene::nearCrate(int x, int y) {
+	for (size_t i = 0; i < Crates.size(); i++) {
+		if (Crates[i].x == x - 1 && Crates[i].y == y) return i;
+		if (Crates[i].x == x + 1 && Crates[i].y == y) return i;
+		if (Crates[i].x == x && Crates[i].y == y - 1) return i;
+		if (Crates[i].x == x && Crates[i].y == y + 1) return i;
+	}
+	return -1;
+}
+
+
 void PlayScene::update() {
 	if (sleepTime > 1000) sleepTime = 1000;
 	doSleep(sleepTime);
@@ -179,6 +199,27 @@ void PlayScene::update() {
 	
 	if (player->getHealth() <= 0) {
 		game->quit();
+	}
+	else if (player->getX() == endX && player->getY() == endY) {
+		if (level > 0) {
+			if (level < 1) {
+				PlayScene *playScene = new PlayScene(game, level + 1);
+				game->setScene(playScene);
+			}
+			else {
+				game->quit();
+			}
+		}
+		else {
+			if (level > -3) {
+				PlayScene *playScene = new PlayScene(game, level - 1);
+				game->setScene(playScene);
+			}
+			else {
+				PlayScene *playScene = new PlayScene(game, 1);
+				game->setScene(playScene);
+			}
+		}
 	}
 	
 	if (animationPlaying) {
@@ -222,9 +263,17 @@ void PlayScene::draw() {
 	//playa
 	player->draw();
 	
+	// goal
+	game->graphics.addToWorld(endX, endY, "!");
+	
 	//enemmies
 	for (int i = 0; i < Enemies.size(); i++) {
 		Enemies[i].draw(player->getX(), player->getY());
+	}
+	
+	//crates
+	for (int i = 0; i < Crates.size(); i++) {
+		game->graphics.addToWorld(Crates[i].x, Crates[i].y, "=");
 	}
 	
 	// ui
@@ -240,7 +289,7 @@ void PlayScene::draw() {
 	//	std::string msg = "Press E to shoot";
 	//	game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
 	//}
-	else if (player->getAP() <= 0) {
+	if (player->getAP() <= 0) {
 		std::string msg = "Out of AP";
 		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
 	}
@@ -250,6 +299,11 @@ void PlayScene::draw() {
 	}
 	if (player->getHealth() <= 0) {
 		std::string msg = "You are dead";
+		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+		sleepTime += 2000;
+	}
+	if (player->getX() == endX && player->getY() == endY) {
+		std::string msg = "Level complete";
 		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
 		sleepTime += 2000;
 	}

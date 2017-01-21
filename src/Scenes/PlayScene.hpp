@@ -13,10 +13,15 @@
 #include "../Jammer.hpp"
 
 
+struct Crate {
+	int x, y;
+};
+
+
 class PlayScene : public tplay::Scene {
 	private:
 		int level;
-		
+		int endX, endY;
 		int animationPlaying = 0;
 		bool playerTurn = true;
 		
@@ -24,6 +29,7 @@ class PlayScene : public tplay::Scene {
 	public:
 		std::vector<Enemy> Enemies;
 		std::vector<Door> Doors;
+		std::vector<Crate> Crates;
 		
 		int sleepTime = 0;
 		int mapX, mapY;
@@ -43,6 +49,7 @@ class PlayScene : public tplay::Scene {
 		bool collides(int x, int y, bool doDoors);
 		bool collides(int x, int y, bool doDoors, int igor);
 		int nearDoor(int x, int y);
+		int nearCrate(int x, int y);
 };
 
 #endif

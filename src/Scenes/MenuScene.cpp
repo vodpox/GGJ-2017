@@ -18,7 +18,7 @@ void MenuScene::update() {
 			PlayScene *playScene = new PlayScene(game, 1);
 			game->setScene(playScene);
 		}else if(option == 2){
-			PlayScene *playScene = new PlayScene(game, 0);
+			PlayScene *playScene = new PlayScene(game, -1);
 			game->setScene(playScene);
 		}else if(option == 3){
 			game->quit();
