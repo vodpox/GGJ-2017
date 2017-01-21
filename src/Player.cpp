@@ -46,7 +46,7 @@ void Player::moveAim(int x, int y) {
 	int newxAim = newxAim + x;
 	int newyAim = newyAim + y;
 	//if( aimIntervals[newyAim][1] != -20  ){ 
-		if(newxAim >= aimIntervals[newyAim][0] && newxAim <= aimIntervals[newyAim][1] ){
+		if(newxAim >= aimIntervals[yAim][0] && newxAim <= aimIntervals[yAim][1] ){
 			this->xAim += x;
 			this->yAim += y;
 		}
@@ -81,7 +81,6 @@ void Player::update(bool *playerTurn){
 	}
 	if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
 		*playerTurn = false;
-		ap = apMax;
 	}
 	
 	if(game->input.isButtonDown(tplay::Keyboard::SPACEBAR)){
@@ -99,6 +98,10 @@ void Player::interactDoor(){
 	/*if( Map[x+1][y] == '|'){ // Right
 		Map[x+1][y];
 	}*/
+}
+
+void Player::resetAP(){
+	this->ap = apMax;
 }
 
 void Player::draw(){
@@ -129,5 +132,7 @@ void Player::drawAim(){
 	}
 	game->graphics.addToWorld(xAim, yAim, "x");
 	game->graphics.addToWorld(20, 20, std::to_string(aimIntervals[yAim][0]));
+	game->graphics.addToWorld(23, 20, std::to_string(aimIntervals[yAim][1]));
+	game->graphics.addToWorld(23, 20, std::to_string(aimIntervals[yAim][1]));
 	game->graphics.addToWorld(23, 20, std::to_string(aimIntervals[yAim][1]));
 }
