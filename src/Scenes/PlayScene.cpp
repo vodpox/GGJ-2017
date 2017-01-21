@@ -55,9 +55,9 @@ void PlayScene::loadMap(int level) {
 				Enemies.push_back(Enemy(game, this, i, j));
 			}
 			else if (Map[i][j] == '=') {
-				Crate crate;
-				crate.x = i;
-				crate.y = j;
+				Crate *crate = new Crate();
+				crate->x = i;
+				crate->y = j;
 				Crates.push_back(crate);
 			}
 			else if (Map[i][j] == '!') {
@@ -183,10 +183,10 @@ int PlayScene::nearDoor(int x, int y) {
 
 int PlayScene::nearCrate(int x, int y) {
 	for (size_t i = 0; i < Crates.size(); i++) {
-		if (Crates[i].x == x - 1 && Crates[i].y == y) return i;
-		if (Crates[i].x == x + 1 && Crates[i].y == y) return i;
-		if (Crates[i].x == x && Crates[i].y == y - 1) return i;
-		if (Crates[i].x == x && Crates[i].y == y + 1) return i;
+		if (Crates[i]->x == x - 1 && Crates[i]->y == y) return i;
+		if (Crates[i]->x == x + 1 && Crates[i]->y == y) return i;
+		if (Crates[i]->x == x && Crates[i]->y == y - 1) return i;
+		if (Crates[i]->x == x && Crates[i]->y == y + 1) return i;
 	}
 	return -1;
 }
@@ -273,7 +273,7 @@ void PlayScene::draw() {
 	
 	//crates
 	for (int i = 0; i < Crates.size(); i++) {
-		game->graphics.addToWorld(Crates[i].x, Crates[i].y, "=");
+		game->graphics.addToWorld(Crates[i]->x, Crates[i]->y, "=");
 	}
 	
 	// ui
@@ -281,32 +281,37 @@ void PlayScene::draw() {
 	
 	
 	// Messages
-	if (nearDoor(player->getX(), player->getY()) != -1) {
-		std::string msg = "Press E to open door";
-		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
-	}
-	//else if (player->aiming()) {
-	//	std::string msg = "Press E to shoot";
-	//	game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
-	//}
-	if (player->getAP() <= 0) {
-		std::string msg = "Out of AP";
-		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
-	}
-	if (!playerTurn) {
-		std::string msg = "Enemy turn";
-		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
-	}
 	if (player->getHealth() <= 0) {
 		std::string msg = "You are dead";
 		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
 		sleepTime += 2000;
 	}
-	if (player->getX() == endX && player->getY() == endY) {
+	else if (player->getX() == endX && player->getY() == endY) {
 		std::string msg = "Level complete";
 		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
 		sleepTime += 2000;
 	}
+	else if (!playerTurn) {
+		std::string msg = "Enemy turn";
+		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+	}
+	else if (player->getAP() <= 0) {
+		std::string msg = "Out of AP";
+		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+	}
+	else if (player->aiming()) {
+		std::string msg = "Press E to shoot";
+		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+	}
+	else if (nearDoor(player->getX(), player->getY()) != -1) {
+		std::string msg = "Press E to open/close door";
+		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+	}
+	else if (nearCrate(player->getX(), player->getY()) != -1) {
+		std::string msg = "Press E to open crate";
+		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+	}
+	
 	
 	//stats
 	game->graphics.addToScreen(1, 0, "Health: " + std::to_string(player->getHealth()));

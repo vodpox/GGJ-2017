@@ -2,7 +2,6 @@
 #include "Player.hpp"
 #include <cmath>
 #include "Scenes/PlayScene.hpp"
-#include <fstream>
 
 
 Player::Player(tplay::Game *game, PlayScene *playScene){
@@ -78,6 +77,11 @@ void Player::update(bool *playerTurn){
 			if (isAiming) shoot();
 			else if ( playScene->nearDoor(x, y) != -1 && ap > 0 ) {
 				playScene->Doors[playScene->nearDoor(x, y)].toggle();
+				ap--;
+			}
+			else if ( playScene->nearCrate(x, y) != -1 && ap > 0 ) {
+				playScene->Crates.erase(playScene->Crates.begin() + playScene->nearDoor(x, y));
+				jammerCount += 3;
 				ap--;
 			}
 		}

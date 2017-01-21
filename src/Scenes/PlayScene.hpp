@@ -29,7 +29,7 @@ class PlayScene : public tplay::Scene {
 	public:
 		std::vector<Enemy> Enemies;
 		std::vector<Door> Doors;
-		std::vector<Crate> Crates;
+		std::vector<Crate*> Crates;
 		
 		int sleepTime = 0;
 		int mapX, mapY;
