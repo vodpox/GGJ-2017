@@ -49,7 +49,16 @@ void PlayScene::loadMap(int level) {
 	
 	for (int i = 0; i < mapX; i++) {
 		for (int j = 0; j < mapY; j++) {
-			if (Map[i][j] == 'O') {
+			if (Map[i][j] == '@') {
+				player->setXY(i, j);
+			}
+			else if (Map[i][j] == 'R') {
+				Enemies.push_back(Enemy(game, this, i, j));
+			}
+			else if (Map[i][j] == '[') {
+				// TODO: crates
+			}
+			else if (Map[i][j] == 'O') {
 				int closedX, closedY, openX, openY;
 				char door;
 				
@@ -101,13 +110,23 @@ void PlayScene::loadMap(int level) {
 }
 
 
-bool PlayScene::collides(int x, int y) {
+bool PlayScene::collides(int x, int y, bool doDoors) {
 	// map
-	for (int i = 0; i < mapX; i++) {
-		for (int j = 0; j < mapY; j++) {
-			if (Map[i][j]) return true;
+	if (x < 0 || x >= mapX || y < 0 || y >= mapY) return true;
+	if (Map[x][y] == '#') return true;
+	
+	if (Map[x][y] == 'O') return true;
+	
+	if (doDoors) {
+		for (int i = 0; i < Doors.size(); i++) {
+			if (Doors[i].getDoorX() == x && Doors[i].getDoorY() == y) return true;
 		}
 	}
+	
+	for (int i = 0; i < Enemies.size(); i++) {
+		if (Enemies[i].getX() == x && Enemies[i].getY() == y) return true;
+	}
+	
 	return false;
 }
 
@@ -117,6 +136,10 @@ void PlayScene::update() {
 	doSleep(sleepTime);
 	sleepTime = 0;
 	
+	if (player->getHealth() <= 0) {
+		game->quit();
+	}
+	
 	if (animationPlaying) {
 		
 	}
@@ -124,9 +147,14 @@ void PlayScene::update() {
 		player->update(&playerTurn);
 	}
 	else { // enemy turn
-		enemy->update();
+		for (int i = 0; i < Enemies.size(); i++) {
+			if (Enemies[i].update() != 0) return;
+		}
 		playerTurn = true;
 		player->resetAP();
+		for (int i = 0; i < Enemies.size(); i++) {
+			Enemies[i].resetAP();
+		}
 	}
 }
 
@@ -149,8 +177,14 @@ void PlayScene::draw() {
 	for (int i = 0; i < Doors.size(); i++) {
 		Doors[i].draw();
 	}
+	
+	//playa
 	player->draw();
-	enemy->draw(player->getX(), player->getY());
+	
+	//enemmies
+	for (int i = 0; i < Enemies.size(); i++) {
+		Enemies[i].draw(player->getX(), player->getY());
+	}
 	
 	// ui
 	game->graphics.setFormat(tplay::Format::NEGATIVE);
@@ -168,6 +202,7 @@ void PlayScene::draw() {
 	if (player->getHealth() <= 0) {
 		std::string msg = "You are dead";
 		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+		sleepTime += 2000;
 	}
 	
 	//stats

@@ -7,13 +7,15 @@ class Door {
 	private:
 		int x, y, openX, openY, closedX, closedY;
 		char openDoor, closedDoor;
-		bool isOpen = false;
 		tplay::Game *game;
 	
 	public:
+		bool isOpen = false;
 		Door(tplay::Game *game, int x, int y, int openX, int openY, int closedX, int closedY, char closedDoor);
-		int getX();
-		int getY();
+		int getBaseX();
+		int getBaseY();
+		int getDoorX();
+		int getDoorY();
 		bool toggle();
 		bool setOpen(bool isOpen);
 		void draw();
