@@ -20,10 +20,10 @@ class PlayScene : public tplay::Scene {
 		int animationPlaying = 0;
 		bool playerTurn = true;
 		
-		std::vector<Door> Doors;
-		std::vector<Enemy> Enemies;
 	
 	public:
+		std::vector<Enemy> Enemies;
+		std::vector<Door> Doors;
 		
 		int sleepTime = 0;
 		int mapX, mapY;
@@ -42,6 +42,7 @@ class PlayScene : public tplay::Scene {
 		void loadMap(int level);
 		bool collides(int x, int y, bool doDoors);
 		bool collides(int x, int y, bool doDoors, int igor);
+		int nearDoor(int x, int y);
 };
 
 #endif

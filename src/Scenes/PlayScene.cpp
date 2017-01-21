@@ -161,6 +161,17 @@ bool PlayScene::collides(int x, int y, bool doDoors, int igor) {
 }
 
 
+int PlayScene::nearDoor(int x, int y) {
+	for (size_t i = 0; i < Doors.size(); i++) {
+		if (Doors[i].getClosedX() == x - 1 && Doors[i].getClosedY() == y) return i;
+		if (Doors[i].getClosedX() == x + 1 && Doors[i].getClosedY() == y) return i;
+		if (Doors[i].getClosedX() == x && Doors[i].getClosedY() == y - 1) return i;
+		if (Doors[i].getClosedX() == x && Doors[i].getClosedY() == y + 1) return i;
+	}
+	return -1;
+}
+
+
 void PlayScene::update() {
 	if (sleepTime > 1000) sleepTime = 1000;
 	doSleep(sleepTime);
@@ -221,7 +232,15 @@ void PlayScene::draw() {
 	
 	
 	// Messages
-	if (player->getAP() <= 0) {
+	if (nearDoor(player->getX(), player->getY()) != -1) {
+		std::string msg = "Press E to open door";
+		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+	}
+	//else if (player->aiming()) {
+	//	std::string msg = "Press E to shoot";
+	//	game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+	//}
+	else if (player->getAP() <= 0) {
 		std::string msg = "Out of AP";
 		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
 	}

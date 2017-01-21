@@ -101,6 +101,12 @@ void Enemy::setXY(int x, int y) {
 int Enemy::update(int id){
 	if (AP <= 0) return 0;
 	
+	int door = playScene->nearDoor(x, y);
+	if (door != -1 && !playScene->Doors[door].isOpen) {
+		playScene->Doors[door].toggle();
+		AP--;
+		return 1;
+	}
 	// pathfinding !!!!!!!!!!!!!!!!!! OG GOD WHY
 	
 	
