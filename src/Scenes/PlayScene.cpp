@@ -68,7 +68,7 @@ void PlayScene::update() {
 		
 	}
 	else if (playerTurn) {
-		player->update();
+		player->update(&playerTurn);
 	}
 	else { // enemy turn
 		enemy->update();
