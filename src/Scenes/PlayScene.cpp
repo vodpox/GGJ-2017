@@ -23,6 +23,7 @@ PlayScene::PlayScene(tplay::Game *game, int level) {
 	this->game->graphics.setCamera(&camera);
 	
 	player = new Player(game);
+	enemy = new Enemy(game, 5, 7);
 	loadMap(level);
 }
 
@@ -70,7 +71,8 @@ void PlayScene::update() {
 		player->update();
 	}
 	else { // enemy turn
-		
+		enemy->update();
+		playerTurn = true;
 	}
 }
 
@@ -82,4 +84,5 @@ void PlayScene::draw() {
 		}
 	}
 	player->draw();
+	enemy->draw(player->getX(), player->getY());
 }
