@@ -94,6 +94,10 @@ void Player::shoot(){
 	
 }
 
+bool Player::aiming(){
+	return isAiming;
+}
+
 void Player::resetAP(){
 	this->ap = apMax;
 }
@@ -108,25 +112,32 @@ void Player::draw(){
 void Player::drawAim(){
 	bool found1 = false;
 	bool found0 = false;
+	bool inner = false;
 	for (int aimy = 0; aimy <= 2*aimRadius; aimy++){
+		found1 = false;
+		found0 = false;
+		inner = false;
 		for (int aimx = 0; aimx <= 2*aimRadius; aimx++){
+			if(x-aimRadius+aimx < 0) continue;
 			distance_to_centre = sqrt((aimy - aimRadius)*(aimy - aimRadius) + (aimx - aimRadius)*(aimx - aimRadius));
 			if (distance_to_centre > aimRadius-0.5 && distance_to_centre < aimRadius+0.5){
-				if(!found1 && found0){
-					found0 = false;
-				}
 				if(aimy>0){
 					found1 = true;
+					found0 = false;
+					if(inner){
+						found0 = true;
+					}
 				}
 				
 				game->graphics.addToWorld(aimx+x-aimRadius, aimy+y-aimRadius, ".");
 				aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = true;
 			}else{
-				if(aimy>0){
-					found0 = true;
-					if(found1 && found0){
+				if(aimy>0 && aimy<2*aimRadius){
+					if(found1 && !found0){
 						aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = true;
+						inner = true;
 					}else{
+						found0 = true;
 						aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = false;
 					}
 				}else{
@@ -140,10 +151,11 @@ void Player::drawAim(){
 	int num;
 	int temp1 = x-aimRadius;
 	int temp2 = y-aimRadius;
-	int inc1 = -15, inc2 = 0;
-	for(int i=temp2; i<13+temp2; i++){
-		inc1=-15;
-		for(int j=temp1; j<13+temp1; j++){
+	int inc1 = -20, inc2 = 0;
+	int gg = aimRadius*2+1;
+	for(int i=temp2; i<gg+temp2; i++){
+		inc1=-20;
+		for(int j=temp1; j<gg+temp1; j++){
 			if(aimSpace[j][i]){
 				num = 1;
 			}else{
