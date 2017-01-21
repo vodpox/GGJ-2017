@@ -125,6 +125,7 @@ void PlayScene::update() {
 	else { // enemy turn
 		enemy->update();
 		playerTurn = true;
+		player->resetAP();
 	}
 }
 
