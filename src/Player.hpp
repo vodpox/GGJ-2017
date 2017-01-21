@@ -5,8 +5,8 @@
 
 class Player {
 	private:
-		int x = 15;
-		int y = 15;
+		int x = 20;
+		int y = 11;
 		int xAim = x;
 		int yAim = y;
 		int health = 100;
@@ -14,6 +14,8 @@ class Player {
 		int jammerCount = 0;
 		int maxJammerCount = 3;
 		int aimRadius = 6;
+		int apMax = 3;
+		int ap = apMax;
 		bool isAiming = false;
 		float distance_to_centre;
 		tplay::Game *game;

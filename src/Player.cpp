@@ -30,6 +30,12 @@ int Player::getHealth() {
 void Player::move(int x, int y) {
 	this->x += x;
 	this->y += y;
+	if(ap > 0){
+		ap--;
+	}else{
+		//playerTurn = false; <---- Sutaisyt
+		ap = apMax;
+	}
 }
 
 void Player::moveAim(int x, int y) {
@@ -72,6 +78,7 @@ void Player::draw(){
 	if(isAiming){
 		drawAim();
 	}
+	game->graphics.addToScreen(1, game->graphics.getTerminalSizeY()-2, "Action point: "+std::to_string(ap));
 }
 
 void Player::drawAim(){

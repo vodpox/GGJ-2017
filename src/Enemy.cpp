@@ -79,11 +79,11 @@ int Enemy::update(){
 
 
 void Enemy::draw(int playerX, int playerY){
-	game->graphics.addToWorld(x, y, "R");
+	/*game->graphics.addToWorld(x, y, "R");
 	
 	int xo, yo;
 	for (int i = 0; ray(0, 0, playerX, playerY, i, &xo, &yo); i++) {
 		game->graphics.addToWorld(xo, yo, "*");
 	}
-	game->graphics.addToWorld(0, 0, std::to_string(xo));
+	game->graphics.addToWorld(0, 0, std::to_string(xo));*/
 }
