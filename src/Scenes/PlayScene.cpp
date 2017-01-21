@@ -121,6 +121,10 @@ bool PlayScene::collides(int x, int y, bool doDoors) {
 		}
 	}
 	
+	for (int i = 0; i < Enemies.size(); i++) {
+		if (Enemies[i].getX() == x && Enemies[i].getY() == y) return true;
+	}
+	
 	return false;
 }
 
