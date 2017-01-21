@@ -58,7 +58,7 @@ void Jammer::draw(){
 bool Jammer::inRange(int x, int y){
 	int temp1 = this->x-radius;
 	int temp2 = this->y-radius;
-	if(aimSpace[x-temp1][y-temp2]){
+	if(space[x-temp1][y-temp2]){
 		return true;
 	}
 	return false;
