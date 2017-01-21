@@ -18,13 +18,25 @@ Door::Door(tplay::Game *game, int x, int y, int openX, int openY, int closedX, i
 }
 
 
-int Door::getX() {
+int Door::getBaseX() {
 	return x;
 }
 
 
-int Door::getY() {
+int Door::getBaseY() {
 	return y;
+}
+
+
+int Door::getDoorX() {
+	if (isOpen) return openX;
+	else return closedX;
+}
+
+
+int Door::getDoorY() {
+	if (isOpen) return openY;
+	else return closedY;
 }
 
 
