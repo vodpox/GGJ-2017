@@ -46,7 +46,7 @@ void Player::moveAim(int x, int y) {
 	int newxAim = newxAim + x;
 	int newyAim = newyAim + y;
 	//if( aimIntervals[newyAim][1] != -20  ){ 
-		if(newxAim >= aimIntervals[newyAim][0] && newxAim <= aimIntervals[newyAim][1] ){
+		if(newxAim >= aimIntervals[yAim][0] && newxAim <= aimIntervals[yAim][1] ){
 			this->xAim += x;
 			this->yAim += y;
 		}
