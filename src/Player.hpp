@@ -27,8 +27,12 @@ class Player {
 		bool aimSpace[256][256];
 		int aimIntervals[256][2];
 		int aimYInterval[2];
+		/*std::ofstream file;
+		file.open("file.txt");*/
 		/*char Map[1000][1000];
 		bool test = false;*/
+		int text1 = 0;
+		int text2 = 0;
 	
 	public:
 		Player(tplay::Game *game, PlayScene *playScene);

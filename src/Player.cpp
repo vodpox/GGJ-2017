@@ -2,6 +2,7 @@
 #include "Player.hpp"
 #include <cmath>
 #include "Scenes/PlayScene.hpp"
+#include <fstream>
 
 
 Player::Player(tplay::Game *game, PlayScene *playScene){
@@ -46,7 +47,9 @@ void Player::move(int x, int y) {
 }
 
 void Player::moveAim(int x, int y) {
-	if(!aimSpace[xAim+x][yAim+y]){
+	int temp1 = this->x-aimRadius;
+	int temp2 = this->y-aimRadius;
+	if(aimSpace[xAim+x-temp1][yAim+y-temp2]){
 		this->xAim += x;
 		this->yAim += y;
 	}
@@ -111,6 +114,8 @@ void Player::draw(){
 	if(isAiming){
 		drawAim();
 	}
+	game->graphics.addToWorld(-20, 30, std::to_string(text1));
+	game->graphics.addToWorld(-18, 30, std::to_string(text2));
 }
 
 void Player::drawAim(){
@@ -127,10 +132,6 @@ void Player::drawAim(){
 		inner = false;
 		for (int aimx = 0; aimx <= 2*aimRadius; aimx++){
 			lengthX++;
-			if(x-aimRadius+aimx < 1) continue;
-			if(y-aimRadius+aimy < 1) continue;
-			if(x-aimRadius+aimy >= playScene->mapX-1) continue;
-			if(y-aimRadius+aimy >= playScene->mapY-1) continue;
 			distance_to_centre = sqrt((aimy - aimRadius)*(aimy - aimRadius) + (aimx - aimRadius)*(aimx - aimRadius));
 			if (distance_to_centre > aimRadius-0.5 && distance_to_centre < aimRadius+0.5){
 				if(aimy>0){
@@ -142,32 +143,32 @@ void Player::drawAim(){
 				}
 				
 				game->graphics.addToWorld(aimx+x-aimRadius, aimy+y-aimRadius, ".");
-				aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = true;
+				aimSpace[aimx][aimy] = true;
 			}else{
 				if(aimy>0 && aimy<2*aimRadius){
 					if(found1 && !found0){
-						aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = true;
+						aimSpace[aimx][aimy] = true;
 						inner = true;
 					}else{
 						found0 = true;
-						aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = false;
+						aimSpace[aimx][aimy] = false;
 					}
 				}else{
-					aimSpace[x-aimRadius+aimx][y-aimRadius+aimy] = false;
+					aimSpace[aimx][aimy] = false;
 				}
 			}
 		}
 	}
 	game->graphics.addToWorld(xAim, yAim, "x");
 	
-	int num;
+	/*int num;
 	int temp1 = x-aimRadius;
 	int temp2 = y-aimRadius;
 	int inc1 = -20, inc2 = 0;
 	int gg = aimRadius*2+1;
-	for(int i=temp2; i<lengthY+temp2; i++){
+	for(int i=0; i<lengthY; i++){
 		inc1=-20;
-		for(int j=temp1; j<lengthX+temp1; j++){
+		for(int j=0; j<lengthX; j++){
 			if(aimSpace[j][i]){
 				num = 1;
 			}else{
@@ -177,5 +178,5 @@ void Player::drawAim(){
 			inc1++;
 		}
 		inc2++;
-	}
+	}*/
 }
