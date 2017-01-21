@@ -100,7 +100,7 @@ void Player::interactDoor(){
 	}*/
 }
 
-void resetAP(){
+void Player::resetAP(){
 	this->ap = apMax;
 }
 
