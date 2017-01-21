@@ -33,8 +33,6 @@ void Player::move(int x, int y) {
 	this->y += y;
 	if(ap > 0){
 		ap--;
-	}else{
-		ap = apMax;
 	}
 }
 
@@ -48,27 +46,30 @@ void Player::setXY(int x, int y) {
 	this->y = y;
 }
 void Player::update(bool *playerTurn){
-    if (game->input.isButtonDown(tplay::Keyboard::S)) {
-		if(isAiming) moveAim(0, -1);
-		else move(0, -1);
-	}else if(game->input.isButtonDown(tplay::Keyboard::W)){
-		if(isAiming) moveAim(0, 1);
-		else move(0, 1);
-	}else if(game->input.isButtonDown(tplay::Keyboard::A)){
-		if(isAiming) moveAim(-1, 0);
-		else move(-1, 0);
-	}else if(game->input.isButtonDown(tplay::Keyboard::D)){
-		if(isAiming) moveAim(1, 0);
-		else move(1, 0);
-	}
-	if(game->input.isButtonDown(tplay::Keyboard::E)){
-		if(isAiming){  }
-		else{
-			interactDoor();
+	if(ap>0){
+		if (game->input.isButtonDown(tplay::Keyboard::S)) {
+			if(isAiming) moveAim(0, -1);
+			else move(0, -1);
+		}else if(game->input.isButtonDown(tplay::Keyboard::W)){
+			if(isAiming) moveAim(0, 1);
+			else move(0, 1);
+		}else if(game->input.isButtonDown(tplay::Keyboard::A)){
+			if(isAiming) moveAim(-1, 0);
+			else move(-1, 0);
+		}else if(game->input.isButtonDown(tplay::Keyboard::D)){
+			if(isAiming) moveAim(1, 0);
+			else move(1, 0);
+		}
+		if(game->input.isButtonDown(tplay::Keyboard::E)){
+			if(isAiming){  }
+			else{
+				interactDoor();
+			}
 		}
 	}
 	if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
 		*playerTurn = false;
+		ap = apMax;
 	}
 	
 	if(game->input.isButtonDown(tplay::Keyboard::SPACEBAR)){
