@@ -17,7 +17,7 @@ class Player {
 		int maxHealth = 100;
 		int jammerCount = 0;
 		int maxJammerCount = 3;
-		int aimRadius = 8;
+		int aimRadius = 6;
 		int apMax = 15;
 		int ap = apMax;
 		bool isAiming = false;
@@ -27,8 +27,12 @@ class Player {
 		bool aimSpace[256][256];
 		int aimIntervals[256][2];
 		int aimYInterval[2];
+		/*std::ofstream file;
+		file.open("file.txt");*/
 		/*char Map[1000][1000];
 		bool test = false;*/
+		int text1 = 0;
+		int text2 = 0;
 	
 	public:
 		Player(tplay::Game *game, PlayScene *playScene);

@@ -12,19 +12,43 @@ void Jammer::update(){
 
 void Jammer::draw(){
 	float distance_to_centre;
-	/*bool found1 = false;
-	bool found0 = false;*/
+	bool found1 = false;
+	bool found0 = false;
+	bool inner = false;
+	int lengthX = 0;
+	int lengthY = 0;
 	for (int aimy = 0; aimy <= 2*radius; aimy++){
+		lengthY++;
+		lengthX = 0;
+		found1 = false;
+		found0 = false;
+		inner = false;
 		for (int aimx = 0; aimx <= 2*radius; aimx++){
+			lengthX++;
 			distance_to_centre = sqrt((aimy - radius)*(aimy - radius) + (aimx - radius)*(aimx - radius));
 			if (distance_to_centre > radius-0.5 && distance_to_centre < radius+0.5){
-				/*if(aimy>0){
+				if(aimy>0){
 					found1 = true;
-				}*/
-				game->graphics.addToWorld(aimx+x-radius, aimy+y-radius, "*");
-				space[x-radius+aimx][y-radius+aimy] = true;
+					found0 = false;
+					if(inner){
+						found0 = true;
+					}
+				}
+				
+				game->graphics.addToWorld(aimx+x-radius, aimy+y-radius, ".");
+				space[aimx][aimy] = true;
 			}else{
-				space[x-radius+aimx][y-radius+aimy] = false;
+				if(aimy>0 && aimy<2*radius){
+					if(found1 && !found0){
+						space[aimx][aimy] = true;
+						inner = true;
+					}else{
+						found0 = true;
+						space[aimx][aimy] = false;
+					}
+				}else{
+					space[aimx][aimy] = false;
+				}
 			}
 		}
 	}
@@ -32,5 +56,10 @@ void Jammer::draw(){
 }
 
 bool Jammer::inRange(int x, int y){
-	
+	int temp1 = this->x-radius;
+	int temp2 = this->y-radius;
+	if(aimSpace[x-temp1][y-temp2]){
+		return true;
+	}
+	return false;
 }
