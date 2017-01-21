@@ -24,7 +24,6 @@ PlayScene::PlayScene(tplay::Game *game, int level) {
 	
 	player = new Player(game);
 	jammer = new Jammer(game);
-	enemy = new Enemy(game, 5, 7);
 	loadMap(level);
 }
 

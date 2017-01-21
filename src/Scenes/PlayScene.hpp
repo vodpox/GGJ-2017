@@ -34,11 +34,7 @@ class PlayScene : public tplay::Scene {
 		
 		PlayScene(tplay::Game *game, int level);
 		Player *player;
-<<<<<<< HEAD
-		Enemy *enemy;
 		Jammer *jammer;
-=======
->>>>>>> b99a6b567647c2e312c1977e6c0aee6241fb764c
 		
 		void update();
 		void draw();
