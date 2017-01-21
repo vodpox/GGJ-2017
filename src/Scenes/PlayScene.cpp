@@ -152,8 +152,26 @@ void PlayScene::draw() {
 	
 	// ui
 	game->graphics.setFormat(tplay::Format::NEGATIVE);
+	
+	
+	// Messages
+	if (player->getAP() <= 0) {
+		std::string msg = "Out of AP";
+		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+	}
+	if (!playerTurn) {
+		std::string msg = "Enemy turn";
+		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+	}
+	if (player->getHealth() <= 0) {
+		std::string msg = "You are dead";
+		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+	}
+	
+	//stats
 	game->graphics.addToScreen(1, 0, "Health: " + std::to_string(player->getHealth()));
 	game->graphics.addToScreen(termX / 2 - std::string("Jammers: " + std::to_string(player->getJammers())).size() / 2 , 0, "Jammers: " + std::to_string(player->getJammers()));
 	game->graphics.addToScreen(termX - 1 - std::string("AP: " + std::to_string(player->getAP())).size(), 0, "AP: " + std::to_string(player->getAP()));
+	
 	game->graphics.unsetFormat(tplay::Format::NEGATIVE);
 }
