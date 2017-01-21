@@ -22,7 +22,7 @@ PlayScene::PlayScene(tplay::Game *game, int level) {
 	this->level = level;
 	this->game->graphics.setCamera(&camera);
 	
-	player = new Player(game);
+	player = new Player(game, this);
 	jammer = new Jammer(game);
 	loadMap(level);
 }
