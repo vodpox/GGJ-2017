@@ -41,6 +41,7 @@ class PlayScene : public tplay::Scene {
 		
 		void loadMap(int level);
 		bool collides(int x, int y, bool doDoors);
+		bool collides(int x, int y, bool doDoors, int igor);
 };
 
 #endif

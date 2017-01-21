@@ -30,7 +30,7 @@ class Enemy {
 		void changeHealth(int change);
 		void setXY(int x, int y);
 		void move(int x, int y);
-		int update();
+		int update(int id);
 		void draw(int, int);
 
 };
