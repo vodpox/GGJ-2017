@@ -19,7 +19,7 @@ class Player {
 		bool isAiming = false;
 		float distance_to_centre;
 		tplay::Game *game;
-		int mapX, mapY;
+		int aimIntervals[256][2];
 		/*char Map[1000][1000];
 		bool test = false;*/
 	
@@ -28,6 +28,8 @@ class Player {
 		int getX();
 		int getY();
 		int getHealth();
+		int getJammers();
+		int getAP();
 		void changeHealth(int change);
 		void changeJammerCount(int change);
 		void setXY(int x, int y);

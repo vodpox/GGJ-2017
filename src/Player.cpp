@@ -27,6 +27,12 @@ void Player::changeJammerCount(int change) {
 int Player::getHealth() {
 	return health;
 }
+int Player::getJammers() {
+	return jammerCount;
+}
+int Player::getAP() {
+	return ap;
+}
 
 void Player::move(int x, int y) {
 	this->x += x;
@@ -37,8 +43,14 @@ void Player::move(int x, int y) {
 }
 
 void Player::moveAim(int x, int y) {
-	this->xAim += x;
-	this->yAim += y;
+	int newxAim = newxAim + x;
+	int newyAim = newyAim + y;
+	//if( aimIntervals[newyAim][1] != -20  ){ 
+		if(newxAim >= aimIntervals[newyAim][0] && newxAim <= aimIntervals[newyAim][1] ){
+			this->xAim += x;
+			this->yAim += y;
+		}
+	//}
 }
 
 void Player::setXY(int x, int y) {
@@ -94,17 +106,28 @@ void Player::draw(){
 	if(isAiming){
 		drawAim();
 	}
-	game->graphics.addToScreen(1, game->graphics.getTerminalSizeY()-2, "Action point: "+std::to_string(ap));
+	//game->graphics.addToScreen(1, game->graphics.getTerminalSizeY()-2, "Action point: "+std::to_string(ap));
 }
 
 void Player::drawAim(){
+	bool first = true;
 	for (int aimy = 0; aimy <= 2*aimRadius; aimy++){
-		for (int aimx = 0; aimx <= 2*aimRadius; aimx++){
+		first = true;
+		for (int aimx = 0; aimx <= 2*aimRadius; aimx++){\
 			distance_to_centre = sqrt((aimy - aimRadius)*(aimy - aimRadius) + (aimx - aimRadius)*(aimx - aimRadius));
 			if (distance_to_centre > aimRadius-0.5 && distance_to_centre < aimRadius+0.5){
 				game->graphics.addToWorld(aimx+x-aimRadius, aimy+y-aimRadius, ".");
+				if(first){
+					aimIntervals[aimy+y-aimRadius][0] = aimx+x-aimRadius;
+					first = false;
+				}
+				aimIntervals[aimy+y-aimRadius][1] = aimx+x-aimRadius;
+			}else{
+				aimIntervals[aimy+y-aimRadius][1] = -20;
 			}
 		}
 	}
 	game->graphics.addToWorld(xAim, yAim, "x");
+	game->graphics.addToWorld(20, 20, std::to_string(aimIntervals[yAim][0]));
+	game->graphics.addToWorld(23, 20, std::to_string(aimIntervals[yAim][1]));
 }
