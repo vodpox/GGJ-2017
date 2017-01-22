@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <string>
 #include <unistd.h>
+#include <cmath>
 #ifdef WIN32
 	#include "windows.h"
 #endif
@@ -251,6 +252,26 @@ void PlayScene::update() {
 	}
 }
 
+void PlayScene::ray(int x1, int y1, int x2, int y2){
+	rayX = x1;
+	rayY = y1;
+	int dx = x1 - x2;
+	int dy = y1 - y2;
+	float steps;
+	
+	if(abs(dx) > abs(dy)) steps = abs(dx);
+	else steps = abs(dy);
+	
+	float xInc = dx / (float)steps;
+	float yInc = dy / (float)steps;
+	
+	for(int i=0; i<steps; i++){
+		rayX += xInc;
+		rayY += yInc;
+		
+		game->graphics.addToWorld(-1*round(rayX), -1*round(rayY), ".");
+	}
+}	
 
 void PlayScene::draw() {
 	int termX = game->graphics.getTerminalSizeX();
@@ -274,6 +295,9 @@ void PlayScene::draw() {
 	for (int i = 0; i < Doors.size(); i++) {
 		Doors[i].draw();
 	}
+	
+	//bullet line
+	ray(0, 0, player->getX(), player->getY());
 	
 	//playa
 	player->draw();
