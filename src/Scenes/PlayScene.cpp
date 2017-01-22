@@ -514,7 +514,7 @@ void PlayScene::draw() {
 	else if (showingTutorial) {
 		if (currentTut == 1) {
 			std::string msg0 = "+----------------------------------------+";
-			std::string msg1 = "|   Welcome to [insert game name here]   |";
+			std::string msg1 = "|        Welcome to Robot Jammer!        |";
 			std::string msg2 = "|   Try to walk around using WASD keys   |";
 			std::string msg3 = "|                                        |";
 			std::string msg4 = "|              > continue <              |";
@@ -608,7 +608,7 @@ void PlayScene::draw() {
 		else if (currentTut == 6) {
 			std::string msg0 = "+-------------------------------------------------+";
 			std::string msg1 = "|         Enemy robots are marked as 'R'          |";
-			std::string msg2 = "|   If one touches you you are as good as dead!   |";
+			std::string msg2 = "|     If one touches you are as good as dead!     |";
 			std::string msg3 = "|             Avoid them at all costs             |";
 			std::string msg4 = "|                                                 |";
 			std::string msg5 = "|                  > continue <                   |";
