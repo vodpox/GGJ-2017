@@ -81,7 +81,7 @@ void Player::update(bool *playerTurn){
 			}
 			else if ( playScene->nearCrate(x, y) != -1 && ap > 0 ) {
 				playScene->Crates.erase(playScene->Crates.begin() + playScene->nearCrate(x, y));
-				jammerCount = maxJammerCount;
+				jammerCount += 3;
 				ap--;
 			}
 		}
