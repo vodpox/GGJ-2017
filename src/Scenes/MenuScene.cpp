@@ -52,7 +52,7 @@ void MenuScene::update() {
 
 
 void MenuScene::draw() {
-	game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 11, 18, "Global Gaming Jam 2017");
+	game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 6, 18, "Robot Jammer");
 	
 	game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 7, 12, option1);
 	game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 7, 10, option2);
