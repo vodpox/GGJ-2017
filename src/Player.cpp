@@ -8,7 +8,6 @@ Player::Player(tplay::Game *game, PlayScene *playScene){
 	this->game = game;
 	this->playScene = playScene;
 	setXY(x, y);
-	//loadMap(0);
 }
 
 int Player::getX() {
@@ -80,14 +79,13 @@ void Player::update(bool *playerTurn){
 				ap--;
 			}
 			else if ( playScene->nearCrate(x, y) != -1 && ap > 0 ) {
-				//(*playScene->Crates[playScene->nearDoor(x, y)]).active = false;
 				jammerCount = maxJammerCount;
 				ap--;
 			}
 		}
 	}
 	if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
-		*playerTurn = false;
+		if(!isAiming) *playerTurn = false;
 	}
 	
 	if(game->input.isButtonDown(tplay::Keyboard::SPACEBAR)){
