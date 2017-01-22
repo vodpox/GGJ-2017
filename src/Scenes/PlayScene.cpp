@@ -138,7 +138,9 @@ bool PlayScene::collides(int x, int y, bool doDoors) {
 	
 	if (Map[x][y] == 'O') return true;
 	
-	if (Map[x][y] == '=') return true;
+	for (int i = 0; i < Crates.size(); i++) {
+		if (Crates[i]->x == x && Crates[i]->y == y) return true;
+	}
 	
 	if (doDoors) {
 		for (int i = 0; i < Doors.size(); i++) {
@@ -166,7 +168,9 @@ bool PlayScene::collides(int x, int y, bool doDoors, bool doJamming, int igor) {
 	
 	if (Map[x][y] == 'O') return true;
 	
-	if (Map[x][y] == '=') return true;
+	for (int i = 0; i < Crates.size(); i++) {
+		if (Crates[i]->x == x && Crates[i]->y == y) return true;
+	}
 	
 	if (doDoors) {
 		for (int i = 0; i < Doors.size(); i++) {
