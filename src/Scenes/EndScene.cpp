@@ -3,15 +3,16 @@
 #include "MenuScene.hpp"
 
 
-EndScene::EndScene(tplay::Game *game) {
+EndScene::EndScene(tplay::Game *game, tplay::Scene *menuScene) {
 	this->game = game;
+	this->menuScene = menuScene;
 	this->game->graphics.setCamera(&camera);
 }
 
 void EndScene::update() {
-    if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
+		if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
 		if(option == 1){
-			//game->setScene(menuScene);
+			game->setScene(menuScene);
 		}
 	}
 }

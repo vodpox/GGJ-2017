@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "PlayScene.hpp"
+#include "EndScene.hpp"
 #include <cstdio>
 #include <string>
 #include <unistd.h>
@@ -18,10 +19,24 @@ void doSleep(int milliseconds) {
 }
 
 
-PlayScene::PlayScene(tplay::Game *game, int level) {
+PlayScene::PlayScene(tplay::Game *game, tplay::Scene *menuScene, int level) {
 	this->game = game;
 	this->level = level;
+	this->menuScene = menuScene;
 	this->game->graphics.setCamera(&camera);
+	
+	player = new Player(game, this);
+	loadMap(level);
+}
+
+
+PlayScene::PlayScene(tplay::Game *game, tplay::Scene *menuScene, PlayScene *oldScene, int level) {
+	this->game = game;
+	this->level = level;
+	this->menuScene = menuScene;
+	this->game->graphics.setCamera(&camera);
+	
+	delete oldScene;
 	
 	player = new Player(game, this);
 	loadMap(level);
@@ -246,20 +261,21 @@ void PlayScene::update() {
 	else if (player->getX() == endX && player->getY() == endY) {
 		if (level > 0) {
 			if (level < 2) {
-				PlayScene *playScene = new PlayScene(game, level + 1);
+				PlayScene *playScene = new PlayScene(game, menuScene, level + 1);
 				game->setScene(playScene);
 			}
 			else {
-				game->quit();
+				EndScene *endScene = new EndScene(game, menuScene);
+				game->setScene(endScene);
 			}
 		}
 		else {
 			if (level > -3) {
-				PlayScene *playScene = new PlayScene(game, level - 1);
+				PlayScene *playScene = new PlayScene(game, menuScene, level - 1);
 				game->setScene(playScene);
 			}
 			else {
-				PlayScene *playScene = new PlayScene(game, 1);
+				PlayScene *playScene = new PlayScene(game, menuScene, 1);
 				game->setScene(playScene);
 			}
 		}
@@ -281,10 +297,11 @@ void PlayScene::update() {
 				isPaused = false;
 			}else if(pauseOption == 1){
 				// Restart level
-				PlayScene *playScene = new PlayScene(game, level);
+				PlayScene *playScene = new PlayScene(game, menuScene, level);
 				game->setScene(playScene);
 			}else if(pauseOption == 2){
 				// Change to menu scene
+				game->setScene(menuScene);
 			}
 		}
 		
