@@ -387,6 +387,7 @@ bool PlayScene::ray(int x1, int y1, int x2, int y2, int doStep, int *lastX, int 
 	float yInc = dy / (float)steps;
 	
 	bool doReturn = true;
+	if ( !(0 < steps && 0 < doStep) ) doReturn = false; 
 	for(int i = 0; i < steps && i < doStep; i++){
 		if ( collides(rayX + xInc, rayY + xInc) ) {
 			doReturn = false;
@@ -451,7 +452,7 @@ void PlayScene::draw() {
 	
 	// throwing logic :^)
 	if (animationPlaying > 0) {
-		int lastX, lastY;
+		int lastX = player->getX(), lastY = player->getY();
 		for (int i = animationPlaying; ray(player->getX(), player->getY(), player->getAimX(), player->getAimY(), i, &lastX, &lastY, 'o'); i++) {
 			sleepTime += 100;
 			animationPlaying++;
