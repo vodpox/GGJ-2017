@@ -181,6 +181,9 @@ void Player::drawAim(){
 	}
 	game->graphics.addToWorld(xAim, yAim, "x");
 	
+	int temp;
+	for (int i = 1; playScene->ray(x, y, xAim, yAim, i, &temp, &temp, '*') && i < 100; i++);
+	
 	/*int num;
 	int temp1 = x-aimRadius;
 	int temp2 = y-aimRadius;

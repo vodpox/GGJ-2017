@@ -73,11 +73,12 @@ class PlayScene : public tplay::Scene {
 		void draw();
 		
 		void loadMap(int level);
+		bool collides(int x, int y); // only map
 		bool collides(int x, int y, bool doDoors);
 		bool collides(int x, int y, bool doDoors, bool doJamming, int igor);
 		int nearDoor(int x, int y);
 		int nearCrate(int x, int y);
-		bool ray(int x1, int y1, int x2, int y2, int doStep);
+		bool ray(int x1, int y1, int x2, int y2, int doStep, int *lastX, int *lastY, char c);
 };
 
 #endif

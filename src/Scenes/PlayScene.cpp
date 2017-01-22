@@ -131,6 +131,25 @@ void PlayScene::loadMap(int level) {
 }
 
 
+bool PlayScene::collides(int x, int y) {
+	// map
+	if (x < 0 || x >= mapX || y < 0 || y >= mapY) return true;
+	if (Map[x][y] == '#') return true;
+	
+	if (Map[x][y] == 'O') return true;
+	
+	for (int i = 0; i < Crates.size(); i++) {
+		if (Crates[i]->x == x && Crates[i]->y == y) return true;
+	}
+	
+	for (int i = 0; i < Doors.size(); i++) {
+		if (Doors[i].getDoorX() == x && Doors[i].getDoorY() == y) return true;
+	}
+	
+	return false;
+}
+
+
 bool PlayScene::collides(int x, int y, bool doDoors) {
 	// map
 	if (x < 0 || x >= mapX || y < 0 || y >= mapY) return true;
@@ -354,7 +373,7 @@ void PlayScene::update() {
 	}
 }
 
-bool PlayScene::ray(int x1, int y1, int x2, int y2, int doStep){
+bool PlayScene::ray(int x1, int y1, int x2, int y2, int doStep, int *lastX, int *lastY, char c){
 	rayX = x1;
 	rayY = y1;
 	int dx = -(x1 - x2);
@@ -369,11 +388,17 @@ bool PlayScene::ray(int x1, int y1, int x2, int y2, int doStep){
 	
 	bool doReturn = true;
 	for(int i = 0; i < steps && i < doStep; i++){
+		if ( collides(rayX + xInc, rayY + xInc) ) {
+			doReturn = false;
+			break;
+		}
 		rayX += xInc;
 		rayY += yInc;
+		*lastX = rayX;
+		*lastY = rayY;
 		if (i == steps - 1) doReturn = false;
 	}
-	game->graphics.addToWorld(round(rayX), round(rayY), "o");
+	game->graphics.addToWorld(round(rayX), round(rayY), std::string(1, c));
 	return doReturn;
 }	
 
@@ -424,13 +449,15 @@ void PlayScene::draw() {
 		game->graphics.addToWorld(Jammers[i].getX(), Jammers[i].getY(), "o");
 	}
 	
+	// throwing logic :^)
 	if (animationPlaying > 0) {
-		for (int i = animationPlaying; ray(player->getX(), player->getY(), player->getAimX(), player->getAimY(), i); i++) {
+		int lastX, lastY;
+		for (int i = animationPlaying; ray(player->getX(), player->getY(), player->getAimX(), player->getAimY(), i, &lastX, &lastY, 'o'); i++) {
 			sleepTime += 100;
 			animationPlaying++;
 			return;
 		}
-		Jammers.push_back(Jammer(game, player->getAimX(), player->getAimY()));
+		Jammers.push_back(Jammer(game, lastX, lastY));
 		animationPlaying = 0;
 	}
 	
