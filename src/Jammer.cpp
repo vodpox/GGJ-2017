@@ -40,6 +40,7 @@ void Jammer::draw(){
 			}else{
 				if(aimy>0 && aimy<2*radius){
 					if(found1 && !found0){
+						game->graphics.addToWorld(aimx+x-radius, aimy+y-radius, ".");
 						space[aimx][aimy] = true;
 						inner = true;
 					}else{
