@@ -75,8 +75,9 @@ void Player::update(bool *playerTurn){
 		if(game->input.isButtonDown(tplay::Keyboard::E)){
 			if (isAiming) shoot();
 			else if ( playScene->nearDoor(x, y) != -1 && ap > 0 ) {
-				playScene->Doors[playScene->nearDoor(x, y)].toggle();
-				ap--;
+				if ( playScene->Doors[playScene->nearDoor(x, y)].toggle() ) {
+					ap--;
+				}
 			}
 			else if ( playScene->nearCrate(x, y) != -1 && ap > 0 ) {
 				playScene->Crates.erase(playScene->Crates.begin() + playScene->nearCrate(x, y));

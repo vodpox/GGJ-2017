@@ -123,7 +123,7 @@ void PlayScene::loadMap(int level) {
 					game->quit();
 				}
 				
-				Doors.push_back(Door(game, i, j, openX, openY, closedX, closedY, door));
+				Doors.push_back(Door(game, this, i, j, openX, openY, closedX, closedY, door));
 			}
 		}
 	}
@@ -466,8 +466,16 @@ void PlayScene::draw() {
 		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
 	}
 	else if (nearDoor(player->getX(), player->getY()) != -1) {
-		std::string msg = "Press E to open/close door";
-		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+		int doorID = nearDoor(player->getX(), player->getY());
+		
+		if (Doors[doorID].getJam()) {
+			std::string msg = "The door is jammed!";
+			game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+		}
+		else {
+			std::string msg = "Press E to open/close door";
+			game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+		}	
 	}
 	else if (nearCrate(player->getX(), player->getY()) != -1) {
 		std::string msg = "Press E to open crate";
@@ -566,22 +574,24 @@ void PlayScene::draw() {
 			std::string msg2 = "|           Go near one and press E to collect it.           |";
 			std::string msg3 = "|        Then You can press spacebar to start aiming         |";
 			std::string msg4 = "|            and press E when aiming to throw it!            |";
-			std::string msg5 = "|   It will  knock out all robots and doors in it's range    |";
-			std::string msg6 = "|                       Use it wisely!                       |";
-			std::string msg7 = "|                                                            |";
-			std::string msg8 = "|                        > continue <                        |";
-			std::string msg9 = "+------------------------------------------------------------+";
+			std::string msg5 = "|           It will knock out all robots and doors           |";
+			std::string msg6 = "|               in it's range for three turns.               |";
+			std::string msg7 = "|                       Use it wisely!                       |";
+			std::string msg8 = "|                                                            |";
+			std::string msg9 = "|                        > continue <                        |";
+			std::string msg10 = "+------------------------------------------------------------+";
 			
-			game->graphics.addToScreen(termX / 2 - msg0.size()  / 2, termY / 2 + 4, msg0);
-			game->graphics.addToScreen(termX / 2 - msg1.size()  / 2, termY / 2 + 3, msg1);
-			game->graphics.addToScreen(termX / 2 - msg2.size()  / 2, termY / 2 + 2, msg2);
-			game->graphics.addToScreen(termX / 2 - msg3.size()  / 2, termY / 2 + 1, msg3);
-			game->graphics.addToScreen(termX / 2 - msg4.size()  / 2, termY / 2 , msg4);
-			game->graphics.addToScreen(termX / 2 - msg5.size()  / 2, termY / 2 - 1, msg5);
-			game->graphics.addToScreen(termX / 2 - msg6.size()  / 2, termY / 2 - 2, msg6);
-			game->graphics.addToScreen(termX / 2 - msg7.size()  / 2, termY / 2 - 3, msg7);
-			game->graphics.addToScreen(termX / 2 - msg8.size()  / 2, termY / 2 - 4, msg8);
-			game->graphics.addToScreen(termX / 2 - msg9.size()  / 2, termY / 2 - 5, msg9);
+			game->graphics.addToScreen(termX / 2 - msg0.size()  / 2, termY / 2 + 5, msg0);
+			game->graphics.addToScreen(termX / 2 - msg1.size()  / 2, termY / 2 + 4, msg1);
+			game->graphics.addToScreen(termX / 2 - msg2.size()  / 2, termY / 2 + 3, msg2);
+			game->graphics.addToScreen(termX / 2 - msg3.size()  / 2, termY / 2 + 2, msg3);
+			game->graphics.addToScreen(termX / 2 - msg4.size()  / 2, termY / 2 + 1, msg4);
+			game->graphics.addToScreen(termX / 2 - msg5.size()  / 2, termY / 2 , msg5);
+			game->graphics.addToScreen(termX / 2 - msg6.size()  / 2, termY / 2 - 1, msg6);
+			game->graphics.addToScreen(termX / 2 - msg7.size()  / 2, termY / 2 - 2, msg7);
+			game->graphics.addToScreen(termX / 2 - msg8.size()  / 2, termY / 2 - 3, msg8);
+			game->graphics.addToScreen(termX / 2 - msg9.size()  / 2, termY / 2 - 4, msg9);
+			game->graphics.addToScreen(termX / 2 - msg10.size()  / 2, termY / 2 - 5, msg10);
 		}
 		else if (currentTut == 6) {
 			std::string msg0 = "+-------------------------------------------------+";
