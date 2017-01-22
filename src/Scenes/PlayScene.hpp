@@ -25,6 +25,17 @@ class PlayScene : public tplay::Scene {
 		int animationPlaying = 0;
 		bool playerTurn = true;
 		float rayX, rayY;
+		bool isPaused = false;
+		int pauseOption = 1;
+		std::string resume = ">     Resume     <";
+		std::string resumeOn = "      Resume      ";
+		std::string resumeText = "";
+		std::string restartLevel = "  Restart  level  ";
+		std::string restartLevelOn = "> Restart  level <";
+		std::string restartLevelText = "  Restart  level  ";
+		std::string quit = ">  Quit to menu  <";
+		std::string quitOn = "   Quit to menu   ";
+		std::string quitText = "";
 	
 	public:
 		// tutorial booleans
