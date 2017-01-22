@@ -230,7 +230,39 @@ void PlayScene::update() {
 		}
 	}
 	
-	if (animationPlaying) {
+	
+	if(game->input.isButtonDown(tplay::Keyboard::ESCAPE)){
+		if(isPaused) isPaused = false;
+		else isPaused = true;
+	}
+	
+	if(isPaused){
+		if(game->input.isButtonDown(tplay::Keyboard::W)){
+			pauseOption--;
+		}else if(game->input.isButtonDown(tplay::Keyboard::S)){
+			pauseOption++;
+		}else if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
+			// change scene
+		}
+		
+		if(pauseOption > 2) pauseOption = 0;
+		else if(pauseOption < 0) pauseOption = 2;
+		
+		if(pauseOption == 0){
+			resumeText = resumeOn;
+			restartLevelText = restartLevel;
+			quitText = quit;
+		}else if(pauseOption == 1){
+			resumeText = resume;
+			restartLevelText = restartLevelOn;
+			quitText = quit;
+		}else if(pauseOption == 2){
+			resumeText = resume;
+			restartLevelText = restartLevel;
+			quitText = quitOn;
+		}
+	}
+	else if (animationPlaying) {
 		
 	}
 	else if (playerTurn) {
@@ -360,6 +392,18 @@ void PlayScene::draw() {
 	game->graphics.addToScreen(1, 0, "Health: " + std::to_string(player->getHealth()));
 	game->graphics.addToScreen(termX / 2 - std::string("Jammers: " + std::to_string(player->getJammers())).size() / 2 , 0, "Jammers: " + std::to_string(player->getJammers()));
 	game->graphics.addToScreen(termX - 1 - std::string("AP: " + std::to_string(player->getAP())).size(), 0, "AP: " + std::to_string(player->getAP()));
+	
+	if(isPaused){
+		game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 19, game->graphics.getTerminalSizeY() / 2+4, "+------------------------------------+");
+		game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 19, game->graphics.getTerminalSizeY() / 2+3, "|                                    |");
+		game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 19, game->graphics.getTerminalSizeY() / 2+2, "|            Game  Paused            |");
+		game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 19, game->graphics.getTerminalSizeY() / 2+1, "|                                    |");
+		game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 19, game->graphics.getTerminalSizeY() / 2  , "|         " + resumeText + "         |");
+		game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 19, game->graphics.getTerminalSizeY() / 2-1, "|         " + restartLevelText +   "         |");
+		game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 19, game->graphics.getTerminalSizeY() / 2-2, "|         " + quitText +   "         |");
+		game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 19, game->graphics.getTerminalSizeY() / 2-3, "|                                    |");
+		game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 19, game->graphics.getTerminalSizeY() / 2-4, "+------------------------------------+");
+	}
 	
 	game->graphics.unsetFormat(tplay::Format::NEGATIVE);
 }
