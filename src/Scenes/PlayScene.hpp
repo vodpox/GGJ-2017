@@ -27,6 +27,16 @@ class PlayScene : public tplay::Scene {
 		float rayX, rayY;
 	
 	public:
+		// tutorial booleans
+		bool tut1-movement = false;
+		bool tut1-turns = false;
+		bool tut1-doors = false;
+		bool tut1-goal = false;
+		
+		bool tut2-jammers = false;
+		
+		bool tut3-enemies = false;
+		
 		std::vector<Enemy> Enemies;
 		std::vector<Door> Doors;
 		std::vector<Jammer> Jammers;
