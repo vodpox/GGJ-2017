@@ -4,8 +4,9 @@
 #include <cstdio>
 
 
-Door::Door(tplay::Game *game, int x, int y, int openX, int openY, int closedX, int closedY, char closedDoor){
+Door::Door(tplay::Game *game, PlayScene *playScene, int x, int y, int openX, int openY, int closedX, int closedY, char closedDoor){
 	this->game = game;
+	this->playScene = playScene;
 	this->x = x;
 	this->y = y;
 	this->openX = openX;
@@ -51,7 +52,23 @@ int Door::getClosedY() {
 
 
 bool Door::toggle() {
-	isOpen = !isOpen;
+	bool doToggle = true;
+	for (int i = 0; i < playScene->Jammers.size(); i++) {
+		if (playScene->Jammers[i].inRange(x, y)) doToggle = false;
+	}
+	if (doToggle) {
+		isOpen = !isOpen;
+		return true;
+	}
+	else return false;
+}
+
+
+bool Door::getJam() {
+	for (int i = 0; i < playScene->Jammers.size(); i++) {
+		if (playScene->Jammers[i].inRange(x, y)) return true;
+	}
+	return false;
 }
 
 
