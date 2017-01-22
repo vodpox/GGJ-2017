@@ -265,7 +265,7 @@ void PlayScene::update() {
 	}
 	else if (player->getX() == endX && player->getY() == endY) {
 		if (level > 0) {
-			if (level < 2) {
+			if (level < 3) {
 				PlayScene *playScene = new PlayScene(game, menuScene, level + 1);
 				game->setScene(playScene);
 			}
