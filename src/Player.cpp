@@ -104,6 +104,7 @@ void Player::shoot(){
 		playScene->Jammers.push_back(Jammer(game, xAim, yAim));
 		ap--;
 		jammerCount--;
+		isAiming = false;
 	}
 }
 
