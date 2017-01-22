@@ -29,6 +29,7 @@ class PlayScene : public tplay::Scene {
 	public:
 		std::vector<Enemy> Enemies;
 		std::vector<Door> Doors;
+		std::vector<Jammer> Jammers;
 		std::vector<Crate*> Crates;
 		
 		int sleepTime = 0;
@@ -40,14 +41,13 @@ class PlayScene : public tplay::Scene {
 		
 		PlayScene(tplay::Game *game, int level);
 		Player *player;
-		Jammer *jammer;
 		
 		void update();
 		void draw();
 		
 		void loadMap(int level);
 		bool collides(int x, int y, bool doDoors);
-		bool collides(int x, int y, bool doDoors, int igor);
+		bool collides(int x, int y, bool doDoors, bool doJamming, int igor);
 		int nearDoor(int x, int y);
 		int nearCrate(int x, int y);
 };

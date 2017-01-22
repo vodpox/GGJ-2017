@@ -5,8 +5,7 @@
 
 class Jammer {
 	private:
-		int x = 30;
-		int y = 10;
+		int x, y;
 		int radius = 5;
 		int maxHealth = 3;
 		int health = maxHealth;
@@ -14,9 +13,11 @@ class Jammer {
 		tplay::Game *game;
 	
 	public:
-		Jammer(tplay::Game *game);
+		Jammer(tplay::Game *game, int x, int y);
 		bool inRange(int x, int y);
-		void update();
+		int getX();
+		int getY();
+		bool update();
 		void draw();
 };
 

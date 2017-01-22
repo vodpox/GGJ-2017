@@ -2,12 +2,16 @@
 #include "Jammer.hpp"
 #include <cmath>
 
-Jammer::Jammer(tplay::Game *game){
+Jammer::Jammer(tplay::Game *game, int x, int y){
 	this->game = game;
+	this->x = x;
+	this->y = y;
 }
 
-void Jammer::update(){
-	
+bool Jammer::update(){
+	health--;
+	if (health > 0) return true;
+	return false;
 }
 
 void Jammer::draw(){
@@ -62,4 +66,14 @@ bool Jammer::inRange(int x, int y){
 		return true;
 	}
 	return false;
+}
+
+
+int Jammer::getX() {
+	return x;
+}
+
+
+int Jammer::getY() {
+	return y;
 }

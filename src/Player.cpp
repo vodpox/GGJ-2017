@@ -80,8 +80,8 @@ void Player::update(bool *playerTurn){
 				ap--;
 			}
 			else if ( playScene->nearCrate(x, y) != -1 && ap > 0 ) {
-				playScene->Crates.erase(playScene->Crates.begin() + playScene->nearDoor(x, y));
-				jammerCount += 3;
+				//(*playScene->Crates[playScene->nearDoor(x, y)]).active = false;
+				jammerCount = maxJammerCount;
 				ap--;
 			}
 		}
@@ -102,7 +102,11 @@ void Player::update(bool *playerTurn){
 }
 
 void Player::shoot(){
-	
+	if (ap > 0 && jammerCount > 0) {
+		playScene->Jammers.push_back(Jammer(game, xAim, yAim));
+		ap--;
+		jammerCount--;
+	}
 }
 
 bool Player::aiming(){

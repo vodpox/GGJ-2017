@@ -141,7 +141,7 @@ int Enemy::update(int id){
 			Nodes[i][j].x = i;
 			Nodes[i][j].y = j;
 			//Nodes[i][j].passable = (playScene->Map[i][j] != '#' && playScene->Map[i][j] != 'O');
-			Nodes[i][j].passable = !playScene->collides(i, j, false, id);
+			Nodes[i][j].passable = !playScene->collides(i, j, false, false, id);
 			Nodes[i][j].h = std::abs(x - playScene->player->getX()) + std::abs(y - playScene->player->getY());
 		}
 	}
@@ -233,7 +233,7 @@ int Enemy::update(int id){
 	}
 	y++; // D:
 	
-	if (!playScene->collides(x + goX, y + goY, true)) {
+	if (!playScene->collides(x + goX, y + goY, true, true, id)) {
 		x += goX;
 		y += goY;
 		playScene->sleepTime += 100;

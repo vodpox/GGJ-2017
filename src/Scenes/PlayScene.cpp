@@ -23,7 +23,6 @@ PlayScene::PlayScene(tplay::Game *game, int level) {
 	this->game->graphics.setCamera(&camera);
 	
 	player = new Player(game, this);
-	jammer = new Jammer(game);
 	loadMap(level);
 }
 
@@ -144,12 +143,14 @@ bool PlayScene::collides(int x, int y, bool doDoors) {
 }
 
 
-bool PlayScene::collides(int x, int y, bool doDoors, int igor) {
+bool PlayScene::collides(int x, int y, bool doDoors, bool doJamming, int igor) {
 	// map
 	if (x < 0 || x >= mapX || y < 0 || y >= mapY) return true;
 	if (Map[x][y] == '#') return true;
 	
 	if (Map[x][y] == 'O') return true;
+	
+	if (Map[x][y] == '=') return true;
 	
 	if (doDoors) {
 		for (int i = 0; i < Doors.size(); i++) {
@@ -164,6 +165,12 @@ bool PlayScene::collides(int x, int y, bool doDoors, int igor) {
 	
 	for (int i = 0; i < Enemies.size(); i++) {
 		if (Enemies[i].getX() == x && Enemies[i].getY() == y && i != igor) return true;
+	}
+	
+	if (doJamming) {
+		for (int i = 0; i < Jammers.size(); i++) {
+			if (Jammers[i].inRange(x, y)) return true;
+		}
 	}
 	
 	return false;
@@ -232,6 +239,10 @@ void PlayScene::update() {
 		for (int i = 0; i < Enemies.size(); i++) {
 			if (Enemies[i].update(i) != 0) return;
 		}
+		//Jammers get --health
+		for (int i = 0; i < Jammers.size(); i++) {
+			if (!Jammers[i].update()) Jammers.erase(Jammers.begin() + i);
+		}
 		playerTurn = true;
 		player->resetAP();
 		for (int i = 0; i < Enemies.size(); i++) {
@@ -247,7 +258,11 @@ void PlayScene::draw() {
 	
 	camera.setCoordinates(player->getX() - game->graphics.getTerminalSizeX() / 2, player->getY() - game->graphics.getTerminalSizeY() / 2);
 	
-	jammer->draw();
+	//Jammers
+	for (int i = 0; i < Jammers.size(); i++) {
+		Jammers[i].draw();
+	}
+	
 	//map
 	for (int i = 0; i < mapX; i++) {
 		for (int j = 0; j < mapY; j++) {
@@ -299,8 +314,12 @@ void PlayScene::draw() {
 		std::string msg = "Out of AP";
 		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
 	}
-	else if (player->aiming()) {
+	else if (player->aiming() && player->getJammers() > 0) {
 		std::string msg = "Press E to shoot";
+		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+	}
+	else if (player->aiming()) {
+		std::string msg = "No jammers left";
 		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
 	}
 	else if (nearDoor(player->getX(), player->getY()) != -1) {
