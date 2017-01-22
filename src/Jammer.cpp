@@ -63,6 +63,7 @@ void Jammer::draw(){
 bool Jammer::inRange(int x, int y){
 	int temp1 = this->x-radius;
 	int temp2 = this->y-radius;
+	if (x-temp1 < 0 || x-temp1 >= 256 || y-temp2 < 0 || y-temp2 >= 256) return false;
 	if(space[x-temp1][y-temp2]){
 		return true;
 	}
