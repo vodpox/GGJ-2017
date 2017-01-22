@@ -22,7 +22,6 @@ class PlayScene : public tplay::Scene {
 	private:
 		int level;
 		int endX, endY;
-		int animationPlaying = 0;
 		bool playerTurn = true;
 		float rayX, rayY;
 		bool isPaused = false;
@@ -40,6 +39,7 @@ class PlayScene : public tplay::Scene {
 		tplay::Scene *menuScene;
 	
 	public:
+		int animationPlaying = 0;
 		// tutorial vars
 		bool showingTutorial = false;
 		int currentTut = 0;
@@ -77,7 +77,7 @@ class PlayScene : public tplay::Scene {
 		bool collides(int x, int y, bool doDoors, bool doJamming, int igor);
 		int nearDoor(int x, int y);
 		int nearCrate(int x, int y);
-		void ray(int x1, int y1, int x2, int y2);
+		bool ray(int x1, int y1, int x2, int y2, int doStep);
 };
 
 #endif

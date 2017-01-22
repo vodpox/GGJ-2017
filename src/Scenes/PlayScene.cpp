@@ -332,7 +332,7 @@ void PlayScene::update() {
 			showingTutorial = false;
 		}
 	}
-	else if (animationPlaying) {
+	else if (animationPlaying > 0) {
 		
 	}
 	else if (playerTurn) {
@@ -354,7 +354,7 @@ void PlayScene::update() {
 	}
 }
 
-void PlayScene::ray(int x1, int y1, int x2, int y2){
+bool PlayScene::ray(int x1, int y1, int x2, int y2, int doStep){
 	rayX = x1;
 	rayY = y1;
 	int dx = -(x1 - x2);
@@ -367,12 +367,14 @@ void PlayScene::ray(int x1, int y1, int x2, int y2){
 	float xInc = dx / (float)steps;
 	float yInc = dy / (float)steps;
 	
-	for(int i=0; i<steps; i++){
+	bool doReturn = true;
+	for(int i = 0; i < steps && i < doStep; i++){
 		rayX += xInc;
 		rayY += yInc;
-		
-		game->graphics.addToWorld(round(rayX), round(rayY), "o");
+		if (i == steps - 1) doReturn = false;
 	}
+	game->graphics.addToWorld(round(rayX), round(rayY), "o");
+	return doReturn;
 }	
 
 void PlayScene::draw() {
@@ -420,6 +422,16 @@ void PlayScene::draw() {
 	//Jammers
 	for (int i = 0; i < Jammers.size(); i++) {
 		game->graphics.addToWorld(Jammers[i].getX(), Jammers[i].getY(), "o");
+	}
+	
+	if (animationPlaying > 0) {
+		for (int i = animationPlaying; ray(player->getX(), player->getY(), player->getAimX(), player->getAimY(), i); i++) {
+			sleepTime += 100;
+			animationPlaying++;
+			return;
+		}
+		Jammers.push_back(Jammer(game, player->getAimX(), player->getAimY()));
+		animationPlaying = 0;
 	}
 	
 	// ui

@@ -38,6 +38,8 @@ class Player {
 		Player(tplay::Game *game, PlayScene *playScene);
 		int getX();
 		int getY();
+		int getAimX();
+		int getAimY();
 		int getHealth();
 		int getJammers();
 		int getAP();
