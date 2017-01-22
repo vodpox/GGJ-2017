@@ -120,8 +120,8 @@ void Player::draw(){
 	if(isAiming){
 		drawAim();
 	}
-	game->graphics.addToWorld(-20, 30, std::to_string(text1));
-	game->graphics.addToWorld(-18, 30, std::to_string(text2));
+	/*game->graphics.addToWorld(-20, 30, std::to_string(text1));
+	game->graphics.addToWorld(-18, 30, std::to_string(text2));*/
 }
 
 void Player::drawAim(){
