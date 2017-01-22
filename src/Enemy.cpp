@@ -107,8 +107,13 @@ int Enemy::update(int id){
 		AP--;
 		return 1;
 	}
-	// pathfinding !!!!!!!!!!!!!!!!!! OG GOD WHY
 	
+	if (std::abs(playScene->player->getX() - x) + std::abs(playScene->player->getY() - y) <= 1) {
+		playScene->player->changeHealth(-1);
+		return 1;
+	}
+	
+	// pathfinding !!!!!!!!!!!!!!!!!! OG GOD WHY
 	
 	y--; // WHY DO I HAVE TO DO THIS
 	int goX = 0, goY = 0;

@@ -329,7 +329,7 @@ void PlayScene::draw() {
 	}
 	
 	//bullet line
-	ray(0, 0, player->getX(), player->getY());
+	//ray(0, 0, player->getX(), player->getY());
 	
 	//playa
 	player->draw();
@@ -351,18 +351,30 @@ void PlayScene::draw() {
 	game->graphics.setFormat(tplay::Format::NEGATIVE);
 	
 	
-	// Messages
+	// Important messages
 	if (player->getHealth() <= 0) {
-		std::string msg = "You are dead";
-		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+		std::string msg0 = "+--------------+";
+		std::string msg1 = "| You are dead |";
+		std::string msg2 = "+--------------+";
+		
+		game->graphics.addToScreen(termX / 2 - msg0.size()  / 2, termY / 2 + 1, msg0);
+		game->graphics.addToScreen(termX / 2 - msg1.size()  / 2, termY / 2, msg1);
+		game->graphics.addToScreen(termX / 2 - msg2.size()  / 2, termY / 2 - 1, msg2);
 		sleepTime += 2000;
 	}
 	else if (player->getX() == endX && player->getY() == endY) {
-		std::string msg = "Level complete";
-		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
+		std::string msg0 = "+-----------------+";
+		std::string msg1 = "| Level completed |";
+		std::string msg2 = "+-----------------+";
+		
+		game->graphics.addToScreen(termX / 2 - msg0.size()  / 2, termY / 2 + 1, msg0);
+		game->graphics.addToScreen(termX / 2 - msg1.size()  / 2, termY / 2, msg1);
+		game->graphics.addToScreen(termX / 2 - msg2.size()  / 2, termY / 2 - 1, msg2);
 		sleepTime += 2000;
 	}
-	else if (!playerTurn) {
+	
+	// Meh messages
+	if (!playerTurn) {
 		std::string msg = "Enemy turn";
 		game->graphics.addToScreen(termX / 2 - msg.size()  / 2, termY - 2, msg);
 	}
@@ -389,8 +401,8 @@ void PlayScene::draw() {
 	
 	
 	//stats
-	game->graphics.addToScreen(1, 0, "Health: " + std::to_string(player->getHealth()));
-	game->graphics.addToScreen(termX / 2 - std::string("Jammers: " + std::to_string(player->getJammers())).size() / 2 , 0, "Jammers: " + std::to_string(player->getJammers()));
+	game->graphics.addToScreen(1, 0, + "Jammers: " + std::to_string(player->getJammers()));
+	//game->graphics.addToScreen(termX / 2 - std::string("Jammers: " + std::to_string(player->getJammers())).size() / 2 , 0, "Jammers: " + std::to_string(player->getJammers()));
 	game->graphics.addToScreen(termX - 1 - std::string("AP: " + std::to_string(player->getAP())).size(), 0, "AP: " + std::to_string(player->getAP()));
 	
 	if(isPaused){

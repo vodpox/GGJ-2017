@@ -13,8 +13,8 @@ class Player {
 		int y = 11;
 		int xAim = x;
 		int yAim = y;
-		int health = 100;
-		int maxHealth = 100;
+		int health = 1;
+		int maxHealth = 1;
 		int jammerCount = 0;
 		int maxJammerCount = 3;
 		int aimRadius = 6;
