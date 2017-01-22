@@ -36,6 +36,8 @@ class PlayScene : public tplay::Scene {
 		std::string quit = "   Quit to menu   ";
 		std::string quitOn = ">  Quit to menu  <";
 		std::string quitText = "";
+		
+		tplay::Scene *menuScene;
 	
 	public:
 		// tutorial vars
@@ -63,7 +65,8 @@ class PlayScene : public tplay::Scene {
 		tplay::Game *game;
 		tplay::Camera camera;
 		
-		PlayScene(tplay::Game *game, int level);
+		PlayScene(tplay::Game *game, tplay::Scene *menuScene, int level);
+		PlayScene(tplay::Game *game, tplay::Scene *menuScene, PlayScene *oldScene, int level);
 		Player *player;
 		
 		void update();

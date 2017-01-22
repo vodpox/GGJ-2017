@@ -9,18 +9,22 @@ MenuScene::MenuScene(tplay::Game *game) {
 }
 
 void MenuScene::update() {
-    if (game->input.isButtonDown(tplay::Keyboard::S)) {
+	if (game->input.isButtonDown(tplay::Keyboard::S)) {
 		option++;
-	}else if(game->input.isButtonDown(tplay::Keyboard::W)){
+	}
+	else if(game->input.isButtonDown(tplay::Keyboard::W)){
 		option--;
-	}else if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
+	}
+	else if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
 		if(option == 1){
-			PlayScene *playScene = new PlayScene(game, 1);
+			PlayScene *playScene = new PlayScene(game, this, 1);
 			game->setScene(playScene);
-		}else if(option == 2){
-			PlayScene *playScene = new PlayScene(game, -1);
+		}
+		else if(option == 2){
+			PlayScene *playScene = new PlayScene(game, this, -1);
 			game->setScene(playScene);
-		}else if(option == 3){
+		}
+		else if(option == 3){
 			game->quit();
 		}
 	}

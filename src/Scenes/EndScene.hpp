@@ -21,12 +21,14 @@ class EndScene : public tplay::Scene {
 		std::string option3textOn = ">    Quit    <";*/
 		
 		Player player(tplay::Game *game);
+		
+		tplay::Scene *menuScene;
 	
 	public:
 		tplay::Game *game;
 		tplay::Camera camera;
 		
-		EndScene(tplay::Game *game);
+		EndScene(tplay::Game *game, tplay::Scene *menuScene);
 		
 		
 		void update();
