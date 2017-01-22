@@ -38,6 +38,19 @@ class PlayScene : public tplay::Scene {
 		std::string quitText = "";
 	
 	public:
+		// tutorial vars
+		bool showingTutorial = false;
+		int currentTut = 0;
+		
+		bool tut1_movement = false;
+		bool tut1_turns = false;
+		bool tut1_doors = false;
+		bool tut1_goal = false;
+		
+		bool tut2_jammers = false;
+		
+		bool tut3_enemies = false;
+		
 		std::vector<Enemy> Enemies;
 		std::vector<Door> Doors;
 		std::vector<Jammer> Jammers;

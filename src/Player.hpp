@@ -18,7 +18,7 @@ class Player {
 		int jammerCount = 0;
 		int maxJammerCount = 3;
 		int aimRadius = 6;
-		int apMax = 150;
+		int apMax = 15;
 		int ap = apMax;
 		bool isAiming = false;
 		float distance_to_centre;
