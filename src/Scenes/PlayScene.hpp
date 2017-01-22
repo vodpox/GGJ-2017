@@ -26,15 +26,15 @@ class PlayScene : public tplay::Scene {
 		bool playerTurn = true;
 		float rayX, rayY;
 		bool isPaused = false;
-		int pauseOption = 1;
-		std::string resume = ">     Resume     <";
-		std::string resumeOn = "      Resume      ";
+		int pauseOption = 0;
+		std::string resume = "      Resume      ";
+		std::string resumeOn = ">     Resume     <";
 		std::string resumeText = "";
 		std::string restartLevel = "  Restart  level  ";
 		std::string restartLevelOn = "> Restart  level <";
-		std::string restartLevelText = "  Restart  level  ";
-		std::string quit = ">  Quit to menu  <";
-		std::string quitOn = "   Quit to menu   ";
+		std::string restartLevelText = "";
+		std::string quit = "   Quit to menu   ";
+		std::string quitOn = ">  Quit to menu  <";
 		std::string quitText = "";
 	
 	public:
