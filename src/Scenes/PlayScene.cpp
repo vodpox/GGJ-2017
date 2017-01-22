@@ -277,7 +277,15 @@ void PlayScene::update() {
 		}else if(game->input.isButtonDown(tplay::Keyboard::S)){
 			pauseOption++;
 		}else if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
-			// change scene
+			if(pauseOption == 0){
+				isPaused = false;
+			}else if(pauseOption == 1){
+				// Restart level
+				PlayScene *playScene = new PlayScene(game, level);
+				game->setScene(playScene);
+			}else if(pauseOption == 2){
+				// Change to menu scene
+			}
 		}
 		
 		if(pauseOption > 2) pauseOption = 0;
