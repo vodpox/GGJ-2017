@@ -102,6 +102,7 @@ void Player::update(bool *playerTurn){
 
 void Player::shoot(){
 	if (ap > 0 && jammerCount > 0) {
+		//playScene->ray(x, y, xAim, yAim);
 		playScene->Jammers.push_back(Jammer(game, xAim, yAim));
 		ap--;
 		jammerCount--;

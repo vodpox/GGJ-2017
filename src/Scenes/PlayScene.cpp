@@ -357,8 +357,8 @@ void PlayScene::update() {
 void PlayScene::ray(int x1, int y1, int x2, int y2){
 	rayX = x1;
 	rayY = y1;
-	int dx = x1 - x2;
-	int dy = y1 - y2;
+	int dx = -(x1 - x2);
+	int dy = -(y1 - y2);
 	float steps;
 	
 	if(abs(dx) > abs(dy)) steps = abs(dx);
@@ -371,7 +371,7 @@ void PlayScene::ray(int x1, int y1, int x2, int y2){
 		rayX += xInc;
 		rayY += yInc;
 		
-		game->graphics.addToWorld(-1*round(rayX), -1*round(rayY), ".");
+		game->graphics.addToWorld(round(rayX), round(rayY), "o");
 	}
 }	
 
