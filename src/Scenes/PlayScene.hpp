@@ -24,7 +24,7 @@ class PlayScene : public tplay::Scene {
 		int endX, endY;
 		int animationPlaying = 0;
 		bool playerTurn = true;
-		
+		float rayX, rayY;
 	
 	public:
 		std::vector<Enemy> Enemies;
@@ -50,6 +50,7 @@ class PlayScene : public tplay::Scene {
 		bool collides(int x, int y, bool doDoors, int igor);
 		int nearDoor(int x, int y);
 		int nearCrate(int x, int y);
+		void ray(int x1, int y1, int x2, int y2);
 };
 
 #endif
