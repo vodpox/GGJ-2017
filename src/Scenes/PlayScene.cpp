@@ -256,7 +256,8 @@ void PlayScene::update() {
 	sleepTime = 0;
 	
 	if (player->getHealth() <= 0) {
-		game->quit();
+		PlayScene *playScene = new PlayScene(game, menuScene, level);
+		game->setScene(playScene);
 	}
 	else if (player->getX() == endX && player->getY() == endY) {
 		if (level > 0) {
@@ -376,7 +377,7 @@ void PlayScene::draw() {
 	
 	camera.setCoordinates(player->getX() - game->graphics.getTerminalSizeX() / 2, player->getY() - game->graphics.getTerminalSizeY() / 2);
 	
-	//Jammers
+	//Jammers ranges
 	for (int i = 0; i < Jammers.size(); i++) {
 		Jammers[i].draw();
 	}
@@ -410,6 +411,11 @@ void PlayScene::draw() {
 	//crates
 	for (int i = 0; i < Crates.size(); i++) {
 		game->graphics.addToWorld(Crates[i]->x, Crates[i]->y, "=");
+	}
+	
+	//Jammers
+	for (int i = 0; i < Jammers.size(); i++) {
+		game->graphics.addToWorld(Jammers[i].getX(), Jammers[i].getY(), "o");
 	}
 	
 	// ui
