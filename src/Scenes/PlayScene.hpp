@@ -38,15 +38,18 @@ class PlayScene : public tplay::Scene {
 		std::string quitText = "";
 	
 	public:
-		// tutorial booleans
-		bool tut1-movement = false;
-		bool tut1-turns = false;
-		bool tut1-doors = false;
-		bool tut1-goal = false;
+		// tutorial vars
+		bool showingTutorial = false;
+		int currentTut = 0;
 		
-		bool tut2-jammers = false;
+		bool tut1_movement = false;
+		bool tut1_turns = false;
+		bool tut1_doors = false;
+		bool tut1_goal = false;
 		
-		bool tut3-enemies = false;
+		bool tut2_jammers = false;
+		
+		bool tut3_enemies = false;
 		
 		std::vector<Enemy> Enemies;
 		std::vector<Door> Doors;

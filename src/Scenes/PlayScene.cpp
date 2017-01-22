@@ -201,6 +201,41 @@ int PlayScene::nearCrate(int x, int y) {
 
 
 void PlayScene::update() {
+	
+	// TUTORIAL LOGIC
+	if (level == -1) {
+		if (!tut1_movement) {
+			showingTutorial = true;
+			tut1_movement = true;
+			currentTut = 1;
+		}
+		else if (nearDoor(player->getX(), player->getY()) != -1 && !tut1_doors) {
+			showingTutorial = true;
+			tut1_doors = true;
+			currentTut = 3;
+		}
+		else if (player->getAP() <= 0 && !tut1_turns) {
+			showingTutorial = true;
+			tut1_turns = true;
+			currentTut = 2;
+		}
+		else if (tut1_movement && tut1_turns && tut1_doors && !tut1_goal && !showingTutorial) {
+			showingTutorial = true;
+			tut1_goal = true;
+			currentTut = 4;
+		}
+	}
+	else if (level == -2 && !tut2_jammers) {
+		showingTutorial = true;
+		tut2_jammers = true;
+		currentTut = 5;
+	}
+	else if (level == -3 && !tut3_enemies) {
+		showingTutorial = true;
+		tut3_enemies = true;
+		currentTut = 6;
+	}
+	
 	if (sleepTime > 1000) sleepTime = 1000;
 	doSleep(sleepTime);
 	sleepTime = 0;
@@ -210,7 +245,7 @@ void PlayScene::update() {
 	}
 	else if (player->getX() == endX && player->getY() == endY) {
 		if (level > 0) {
-			if (level < 1) {
+			if (level < 2) {
 				PlayScene *playScene = new PlayScene(game, level + 1);
 				game->setScene(playScene);
 			}
@@ -260,6 +295,11 @@ void PlayScene::update() {
 			resumeText = resume;
 			restartLevelText = restartLevel;
 			quitText = quitOn;
+		}
+	}
+	else if (showingTutorial) {
+		if(game->input.isButtonDown(tplay::Keyboard::ENTER)){
+			showingTutorial = false;
 		}
 	}
 	else if (animationPlaying) {
@@ -415,6 +455,116 @@ void PlayScene::draw() {
 		game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 19, game->graphics.getTerminalSizeY() / 2-2, "|         " + quitText +   "         |");
 		game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 19, game->graphics.getTerminalSizeY() / 2-3, "|                                    |");
 		game->graphics.addToScreen(game->graphics.getTerminalSizeX() / 2 - 19, game->graphics.getTerminalSizeY() / 2-4, "+------------------------------------+");
+	}
+	else if (showingTutorial) {
+		if (currentTut == 1) {
+			std::string msg0 = "+----------------------------------------+";
+			std::string msg1 = "|   Welcome to [insert game name here]   |";
+			std::string msg2 = "|   Try to walk around using WASD keys   |";
+			std::string msg3 = "|                                        |";
+			std::string msg4 = "|              > continue <              |";
+			std::string msg5 = "+----------------------------------------+";
+			
+			game->graphics.addToScreen(termX / 2 - msg0.size()  / 2, termY / 2 + 2, msg0);
+			game->graphics.addToScreen(termX / 2 - msg1.size()  / 2, termY / 2 + 1, msg1);
+			game->graphics.addToScreen(termX / 2 - msg2.size()  / 2, termY / 2, msg2);
+			game->graphics.addToScreen(termX / 2 - msg3.size()  / 2, termY / 2 - 1, msg3);
+			game->graphics.addToScreen(termX / 2 - msg4.size()  / 2, termY / 2 - 2, msg4);
+			game->graphics.addToScreen(termX / 2 - msg5.size()  / 2, termY / 2 - 3, msg5);
+		}
+		else if (currentTut == 2) {
+			std::string msg0 = "+----------------------------------------------+";
+			std::string msg1 = "|      In this game you and your enemies       |";
+			std::string msg2 = "|        will be taking turns to  move.        |";
+			std::string msg3 = "|    You just ran out of action points (AP)    |";
+			std::string msg4 = "|       so press enter to end your turn!       |";
+			std::string msg5 = "|                                              |";
+			std::string msg6 = "|                 > continue <                 |";
+			std::string msg7 = "+----------------------------------------------+";
+			
+			game->graphics.addToScreen(termX / 2 - msg0.size()  / 2, termY / 2 + 3, msg0);
+			game->graphics.addToScreen(termX / 2 - msg1.size()  / 2, termY / 2 + 2, msg1);
+			game->graphics.addToScreen(termX / 2 - msg2.size()  / 2, termY / 2 + 1, msg2);
+			game->graphics.addToScreen(termX / 2 - msg3.size()  / 2, termY / 2 , msg3);
+			game->graphics.addToScreen(termX / 2 - msg4.size()  / 2, termY / 2 - 1, msg4);
+			game->graphics.addToScreen(termX / 2 - msg5.size()  / 2, termY / 2 - 2, msg5);
+			game->graphics.addToScreen(termX / 2 - msg6.size()  / 2, termY / 2 - 3, msg6);
+			game->graphics.addToScreen(termX / 2 - msg7.size()  / 2, termY / 2 - 4, msg7);
+		}
+		else if (currentTut == 3) {
+			std::string msg0 = "+----------------------------------------------+";
+			std::string msg1 = "|     This is a door. Open it using E key.     |";
+			std::string msg2 = "|   Enemies that you will find in the future   |";
+			std::string msg3 = "|     will have a hard time opening these!     |";
+			std::string msg4 = "|                                              |";
+			std::string msg5 = "|                 > continue <                 |";
+			std::string msg6 = "+----------------------------------------------+";
+			
+			game->graphics.addToScreen(termX / 2 - msg0.size()  / 2, termY / 2 + 3, msg0);
+			game->graphics.addToScreen(termX / 2 - msg1.size()  / 2, termY / 2 + 2, msg1);
+			game->graphics.addToScreen(termX / 2 - msg2.size()  / 2, termY / 2 + 1, msg2);
+			game->graphics.addToScreen(termX / 2 - msg3.size()  / 2, termY / 2 , msg3);
+			game->graphics.addToScreen(termX / 2 - msg4.size()  / 2, termY / 2 - 1, msg4);
+			game->graphics.addToScreen(termX / 2 - msg5.size()  / 2, termY / 2 - 2, msg5);
+			game->graphics.addToScreen(termX / 2 - msg6.size()  / 2, termY / 2 - 3, msg6);	
+		}
+		else if (currentTut == 4) {
+			std::string msg0 = "+-----------------------------------------------+";
+			std::string msg1 = "|         Your goal in this game is to          |";
+			std::string msg2 = "|   reach the end of each level marked as '!'   |";
+			std::string msg3 = "|                  Good luck!                   |";
+			std::string msg4 = "|                                               |";
+			std::string msg5 = "|                 > continue <                  |";
+			std::string msg6 = "+-----------------------------------------------+";
+			
+			game->graphics.addToScreen(termX / 2 - msg0.size()  / 2, termY / 2 + 3, msg0);
+			game->graphics.addToScreen(termX / 2 - msg1.size()  / 2, termY / 2 + 2, msg1);
+			game->graphics.addToScreen(termX / 2 - msg2.size()  / 2, termY / 2 + 1, msg2);
+			game->graphics.addToScreen(termX / 2 - msg3.size()  / 2, termY / 2 , msg3);
+			game->graphics.addToScreen(termX / 2 - msg4.size()  / 2, termY / 2 - 1, msg4);
+			game->graphics.addToScreen(termX / 2 - msg5.size()  / 2, termY / 2 - 2, msg5);
+			game->graphics.addToScreen(termX / 2 - msg6.size()  / 2, termY / 2 - 3, msg6);
+		}
+		else if (currentTut == 5) {
+			std::string msg0 = "+------------------------------------------------------------+";
+			std::string msg1 = "|     Crates filled with radio jammers are marked as '='     |";
+			std::string msg2 = "|           Go near one and press E to collect it.           |";
+			std::string msg3 = "|        Then You can press spacebar to start aiming         |";
+			std::string msg4 = "|            and press E when aiming to throw it!            |";
+			std::string msg5 = "|   It will  knock out all robots and doors in it's range    |";
+			std::string msg6 = "|                       Use it wisely!                       |";
+			std::string msg7 = "|                                                            |";
+			std::string msg8 = "|                        > continue <                        |";
+			std::string msg9 = "+------------------------------------------------------------+";
+			
+			game->graphics.addToScreen(termX / 2 - msg0.size()  / 2, termY / 2 + 4, msg0);
+			game->graphics.addToScreen(termX / 2 - msg1.size()  / 2, termY / 2 + 3, msg1);
+			game->graphics.addToScreen(termX / 2 - msg2.size()  / 2, termY / 2 + 2, msg2);
+			game->graphics.addToScreen(termX / 2 - msg3.size()  / 2, termY / 2 + 1, msg3);
+			game->graphics.addToScreen(termX / 2 - msg4.size()  / 2, termY / 2 , msg4);
+			game->graphics.addToScreen(termX / 2 - msg5.size()  / 2, termY / 2 - 1, msg5);
+			game->graphics.addToScreen(termX / 2 - msg6.size()  / 2, termY / 2 - 2, msg6);
+			game->graphics.addToScreen(termX / 2 - msg7.size()  / 2, termY / 2 - 3, msg7);
+			game->graphics.addToScreen(termX / 2 - msg8.size()  / 2, termY / 2 - 4, msg8);
+			game->graphics.addToScreen(termX / 2 - msg9.size()  / 2, termY / 2 - 5, msg9);
+		}
+		else if (currentTut == 6) {
+			std::string msg0 = "+-------------------------------------------------+";
+			std::string msg1 = "|         Enemy robots are marked as 'R'          |";
+			std::string msg2 = "|   If one touches you you are as good as dead!   |";
+			std::string msg3 = "|             Avoid them at all costs             |";
+			std::string msg4 = "|                                                 |";
+			std::string msg5 = "|                  > continue <                   |";
+			std::string msg6 = "+-------------------------------------------------+";
+			
+			game->graphics.addToScreen(termX / 2 - msg0.size()  / 2, termY / 2 + 3, msg0);
+			game->graphics.addToScreen(termX / 2 - msg1.size()  / 2, termY / 2 + 2, msg1);
+			game->graphics.addToScreen(termX / 2 - msg2.size()  / 2, termY / 2 + 1, msg2);
+			game->graphics.addToScreen(termX / 2 - msg3.size()  / 2, termY / 2, msg3);
+			game->graphics.addToScreen(termX / 2 - msg4.size()  / 2, termY / 2 - 1, msg4);
+			game->graphics.addToScreen(termX / 2 - msg5.size()  / 2, termY / 2 - 2, msg5);
+			game->graphics.addToScreen(termX / 2 - msg6.size()  / 2, termY / 2 - 3, msg6);
+		}
 	}
 	
 	game->graphics.unsetFormat(tplay::Format::NEGATIVE);
